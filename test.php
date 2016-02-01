@@ -4,7 +4,7 @@ include "config.php";
 include 'controllers/usersController.php';
 include 'models/usersModel.php';
 
-$hero = new UsersController(32);
+$hero = new UsersController();
 
 ?>
 
@@ -25,7 +25,8 @@ $hero = new UsersController(32);
 
 <?php
 
-   echo $hero->userInfo(32);
+    $myValue = $hero->userInfo(33);
+    echo $myValue->password;
 
 ?>
 
