@@ -26,7 +26,7 @@ $hero = new UsersController();
 <?php
 
     $myValue = $hero->userInfo(33);
-    echo $myValue->password;
+    echo $myValue->login;
 
 ?>
 
