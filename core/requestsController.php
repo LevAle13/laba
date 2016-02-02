@@ -8,25 +8,27 @@
 
 class requestsController
 {
+    public $renderPage = '';
+    public $controllerList = array();
+
     public function getRequest($requestData)
     {
 
-        $renderPage = '';
+        $this->renderPage = '';
 
         if (isset($requestData['page']))
         {
             if ($requestData['page']=='login')
             {
-
+                $this->renderPage = 'login';
+                $this->controllerList = array ('1' => 'users');
             }
         }
         else
         {
-            $renderPage = 'index';
+            $this->renderPage = 'index';
 
         }
-
-        return $renderPage;
     }
 }
 
