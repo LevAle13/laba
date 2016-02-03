@@ -37,7 +37,7 @@ class requestsController
 
     public function loadClass($classArray)
     {
-        foreach ($classArray->controllerList as $value) {
+        foreach ($classArray as $value) {
             //echo 'controllers/'.$value.'Controller.php';
             include ('controllers/'.$value.'Controller.php');
             include ('models/'.$value.'Model.php');
