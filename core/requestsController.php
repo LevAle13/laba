@@ -22,6 +22,10 @@ class requestsController
             {
                 $this->renderPage = 'login';
                 $this->controllerList = array ('1' => 'users');
+                $this->loadClass($this->controllerList);
+
+                $hero = new UsersController();
+
             }
         }
         else
@@ -30,6 +34,17 @@ class requestsController
 
         }
     }
+
+    public function loadClass($classArray)
+    {
+        foreach ($classArray->controllerList as $value) {
+            //echo 'controllers/'.$value.'Controller.php';
+            include ('controllers/'.$value.'Controller.php');
+            include ('models/'.$value.'Model.php');
+        }
+
+    }
+
 }
 
 ?>

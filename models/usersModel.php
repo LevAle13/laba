@@ -10,7 +10,7 @@
 class UsersModel
 {
 
-    // Пользовательские данные.
+    // РџР°СЂР°РјРµС‚СЂС‹ СѓС‡РµС‚РєРё
     public $userId;
     public $login;
     public $password;
@@ -21,7 +21,7 @@ class UsersModel
     public $failPassTry;
     public $enterPassTime;
 
-    // Параметры персонажа.
+    // РџР°СЂР°РјРµС‚СЂС‹ РіРµСЂРѕСЏ
     public $attackType;
     public $minimumDamage;
     public $maximumDamage;
@@ -38,16 +38,16 @@ class UsersModel
     public $currentGold;
     public $questGold;
     public $questId;
-    public $questStep; // Если не равен нулю то персонаж в бою и нужно обрезать ему часть действий - покупка, одевание и прочее.
+    public $questStep; // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
     public $maximumLevelQuest;
     public $enemyId;
     public $pvpScore;
-    public $def; // Не помню для чего это.
+    public $def; // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.
 
     //public $userInfo = array();
 
 
-    // Считываем из БД данные по пользователю.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     public function readUser($userId)
     {
         $sql = xquery ("select * from users where id='" . $userId . "'");
@@ -87,26 +87,19 @@ class UsersModel
         //...
     }
 
-    // Считываем все параметры пользователя.
-    public function ReadAllUserValue($userId)
-    {
-
-    }
-
-
-    // Загрузка нужных полей. Модель.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ.
     public function loadFields($fields)
     {
 
     }
 
-    // Апдейтим нужные поля.  Модель.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.  пїЅпїЅпїЅпїЅпїЅпїЅ.
     public function updateFields($fields)
     {
 
     }
 
-    // Загрузка текущих скилов персонажа в массив $skillsArray(); Модель.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ $skillsArray(); пїЅпїЅпїЅпїЅпїЅпїЅ.
     public function loadSkills()
     {
 
