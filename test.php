@@ -1,8 +1,8 @@
 <?php
 $check=1;
 include "config.php";
-include 'controllers/usersController.php';
-include 'models/usersModel.php';
+include 'controllers/UsersController.php';
+include 'models/Users.php';
 
 $hero = new UsersController();
 

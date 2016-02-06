@@ -38,16 +38,16 @@ class UsersModel
     public $currentGold;
     public $questGold;
     public $questId;
-    public $questStep; // ���� �� ����� ���� �� �������� � ��� � ����� �������� ��� ����� �������� - �������, �������� � ������.
+    public $questStep; // Движение по лесу (1-10)
     public $maximumLevelQuest;
     public $enemyId;
     public $pvpScore;
-    public $def; // �� ����� ��� ���� ���.
+    public $def; // Не помню зачем это нужно
 
     //public $userInfo = array();
 
 
-    // ��������� �� �� ������ �� ������������.
+    // Считываем все данные пользователя по его айди
     public function readUser($userId)
     {
         $sql = xquery ("select * from users where id='" . $userId . "'");
@@ -87,19 +87,19 @@ class UsersModel
         //...
     }
 
-    // �������� ������ �����. ������.
+    // Загружаем выбранные поля
     public function loadFields($fields)
     {
 
     }
 
-    // �������� ������ ����.  ������.
+    // Упдайтеми нужные поля
     public function updateFields($fields)
     {
 
     }
 
-    // �������� ������� ������ ��������� � ������ $skillsArray(); ������.
+    // Загружаем список скилов в массив $skillsArray()
     public function loadSkills()
     {
 
