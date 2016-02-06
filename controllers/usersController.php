@@ -32,7 +32,7 @@ class UsersController
 
     }
 
-    // Добавление золота.
+    // Добавление золота
     public function addGold($experience)
     {
         // Добавляем в текущее хранилище персонажа.
