@@ -14,7 +14,7 @@ require_once 'core/requestsController.php';
 //require_once 'load.php';
 $newRequest = new requestsController();
 $newRequest->getRequest($requestData);
-// тест
+//
 
 
 
