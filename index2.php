@@ -10,11 +10,12 @@ include "config.php";
 //ini_set('display_errors', 1);
 
 $requestData = $_REQUEST;
-require_once 'core/requestsController.php';
-//require_once 'load.php';
-// Возможно это должен быть статик, ведь два раза в одну речку тут не войдешь?
-$newRequest = new requestsController();
-$newRequest->getRequest($requestData);
+//require_once 'core/RequestsController.php';
+require_once 'core/Routing.php';
+//$newRequest = new requestsController();
+//$newRequest->getRequest($requestData);
+
+Routing::parseUrl();
 
 
 
