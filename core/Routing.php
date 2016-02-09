@@ -11,20 +11,50 @@ class Routing
     public $controller;
     public $action;
     public $parseValue;
+    public $parse;
+    public $requestData;
 
-    public static function parseUrl ()
+    public function routingStart($requestData)
     {
-        $parse = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
-
-        $controller = $parse['1'].'Controller';
-        $action = $parse['2'].'Action';
-        $parseValue = $parse['3'];
-
-        print_r ($parse);
-        echo '<br><br>Controller: '.$controller;
-        echo '<br><br>Action: '.$action;
-        echo '<br><br>Value: '.$parseValue;
+        // Нужен код для проверки пользовательских данных;
+        $this->requestData=$requestData;
+        $this->parseUrl();
+        $this->loadClass();
     }
+
+    // Парсим адресную строку;
+    public function parseUrl ()
+    {
+        $this->parse = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
+
+        $this->controller = $this->parse['0'].'Controller';
+        $this->action = $this->parse['1'].'Action';
+        $this->parseValue = $this->parse['2'];
+    }
+
+    // Вывод на экран
+    public function printParse()
+    {
+        print_r ($this->parse);
+        echo '<br><br>Controller: '.$this->controller;
+        echo '<br><br>Action: '.$this->action;
+        echo '<br><br>Value: '.$this->parseValue;
+    }
+
+    // Подгружаем необходимые классы для основного метода, на основе массива;
+    public function loadClass()
+    {
+        include ('controllers/'.$this->controller.'.php');
+        //include ('models/'.$value.'.php');
+    }
+
+    // Создаем объект контроллера на основе полученных данных и вызываем метод action;
+    public function actionController()
+    {
+        $newAction = new $this->controller;
+        $newAction->action($this->requestData);
+    }
+
 
 }
 

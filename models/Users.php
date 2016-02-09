@@ -87,6 +87,22 @@ class UsersModel
         //...
     }
 
+    // Извлечение данных для логина;
+    public function login($login,$password)
+    {
+        $sql = xquery ("select id, login, pass, last_time, pass_try, pass_time from users where login='". $login ."' and pass = '". $password ."'");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        $result = $data[0];
+
+        $this->login = $result['id'];
+        $this->login = $result['login'];
+        $this->password = $result['pass'];
+        $this->registerTime = $result['register_time'];
+        $this->lastLoginTime = $result['last_time'];
+        $this->failPassTry = $result['pass_try'];
+
+    }
+
     // Загружаем выбранные поля
     public function loadFields($fields)
     {

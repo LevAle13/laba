@@ -15,7 +15,9 @@ require_once 'core/Routing.php';
 //$newRequest = new requestsController();
 //$newRequest->getRequest($requestData);
 
-Routing::parseUrl();
+$myRouting = new Routing();
+$myRouting->routingStart($requestData);
+$myRouting->printParse();
 
 
 
