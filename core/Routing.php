@@ -31,6 +31,10 @@ class Routing
         $this->controller = $this->parse['0'].'Controller';
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
+
+        // Проверка на пустой контроллер;
+
+        // Проверка на пустой Экшен;
     }
 
     // Вывод на экран
