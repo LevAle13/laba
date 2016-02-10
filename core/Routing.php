@@ -33,8 +33,18 @@ class Routing
         $this->parseValue = $this->parse['2'];
 
         // Проверка на пустой контроллер;
+        if (empty($this->controller))
+        {
+            $this->controller = 'IndexController';
+            $this->action = 'IndexAction';
+        }
 
         // Проверка на пустой Экшен;
+        if (empty($this->action))
+        {
+            $this->controller = 'IndexController';
+            $this->action = 'ErrorPage';
+        }
     }
 
     // Вывод на экран
@@ -51,8 +61,21 @@ class Routing
     // Подгружаем необходимые классы для основного метода, на основе массива;
     public function loadClass()
     {
-        include ('controllers/'.$this->controller.'.php');
-        //include ('models/'.$value.'.php');
+        $filename = 'controllers/'.$this->controller.'.php';
+
+        if (file_exists($filename))
+        {
+            include ($filename);
+        }
+        else
+        {
+            $this->controller = 'IndexController';
+            $this->action = 'ErrorPage';
+            $filename = 'controllers/'.$this->controller.'.php';
+            include ($filename);
+        }
+
+
     }
 
     // Создаем объект контроллера на основе полученных данных и вызываем метод action;
