@@ -13,41 +13,60 @@ class Routing
     public $parseValue;
     public $parse;
     public $requestData;
+    public $returnPage;
+    public $resultParse;
+    public $resultView;
+    public $errorMessage;
 
+    // Точка входа на Роутинг;
     public function routingStart($requestData)
     {
         // Нужен код для проверки пользовательских данных;
         $this->requestData=$requestData;
-        $this->parseUrl();
-        $this->loadClass();
-        $this->actionController();
+        $this->parseUrl($_SERVER['REQUEST_URI']);
+
+        if ($this->resultParse== 'true')
+        {
+            if ($this->loadClass() == true)
+            {
+                $this->actionController();
+            }
+        }
+
+        // Вызываем вьюху;
+        include $this->returnPage.'.php';
     }
 
     // Парсим адресную строку;
-    public function parseUrl ()
+    public function parseUrl ($url)
     {
-        $this->parse = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
+
+        $this->parse = explode("/", trim($url, "/"));
 
         $this->controller = $this->parse['0'].'Controller';
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
+        $this->resultParse = 'true';
         // Проверка на пустой контроллер;
-        if (empty($this->controller))
+        if ($this->controller == 'Controller')
         {
-            $this->controller = 'IndexController';
-            $this->action = 'IndexAction';
+            $this->resultParse = 'index';
+            $this->returnPage = 'index';
         }
 
         // Проверка на пустой Экшен;
-        if (empty($this->action))
+        if (empty($this->parse['1']))
         {
-            $this->controller = 'IndexController';
-            $this->action = 'ErrorPage';
+            $this->resultParse = 'error';
+            $this->returnPage = 'errorPage';
+            $this->errorMessage = 'Action is absent!';
         }
+
+//        $this->printParse();
     }
 
-    // Вывод на экран
+    // Вывод на экран; Вспомогательный метод для отслеживания передаваемых данных;
     public function printParse()
     {
         print_r ($this->parse);
@@ -61,20 +80,25 @@ class Routing
     // Подгружаем необходимые классы для основного метода, на основе массива;
     public function loadClass()
     {
+
+
         $filename = 'controllers/'.$this->controller.'.php';
+
 
         if (file_exists($filename))
         {
+            $loadResult = true;
             include ($filename);
         }
         else
         {
-            $this->controller = 'IndexController';
-            $this->action = 'ErrorPage';
-            $filename = 'controllers/'.$this->controller.'.php';
-            include ($filename);
+            $loadResult = false;
+            $this->resultParse = 'error';
+            $this->returnPage = 'errorPage';
+            $this->errorMessage = 'Action is absent!';
         }
 
+        return $loadResult;
 
     }
 
@@ -83,8 +107,18 @@ class Routing
     {
         $newAction = new $this->controller;
 
-        $actionBegin = $this->action;
-        $newAction->$actionBegin($this->requestData);
+        // Проверка наличия метода класса;
+        if (method_exists($newAction,$this->action) == true)
+        {
+            $actionBegin = $this->action;
+            $newAction->$actionBegin($this->requestData);
+        }
+        else
+        {
+            $this->returnPage = 'errorPage';
+            $this->errorMessage = 'Action '.$this->action.' is absent!';
+
+        }
     }
 
 
