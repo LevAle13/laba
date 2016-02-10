@@ -20,6 +20,7 @@ class Routing
         $this->requestData=$requestData;
         $this->parseUrl();
         $this->loadClass();
+        $this->actionController();
     }
 
     // Парсим адресную строку;
@@ -39,6 +40,8 @@ class Routing
         echo '<br><br>Controller: '.$this->controller;
         echo '<br><br>Action: '.$this->action;
         echo '<br><br>Value: '.$this->parseValue;
+        echo '<br><br>Login: '.$this->requestData['login'];
+        echo '<br><br>Password: '.$this->requestData['pass'];
     }
 
     // Подгружаем необходимые классы для основного метода, на основе массива;
@@ -52,7 +55,9 @@ class Routing
     public function actionController()
     {
         $newAction = new $this->controller;
-        $newAction->action($this->requestData);
+
+        $actionBegin = $this->action;
+        $newAction->$actionBegin($this->requestData);
     }
 
 
