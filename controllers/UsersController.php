@@ -78,7 +78,7 @@ class UsersController
 
     }
 
-    // Бегство.1
+    // Бегство.
     public function runTry()
     {
 
