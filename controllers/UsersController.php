@@ -14,7 +14,7 @@ class UsersController
     {
     }
 
-    // ЛОГИН;
+    // ЛОГИН;1
     public function loginAction($requestData)
     {
         // Подключаем модель Users
