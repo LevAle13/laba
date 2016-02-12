@@ -112,6 +112,8 @@ class Routing
         {
             $actionBegin = $this->action;
             $newAction->$actionBegin($this->requestData);
+
+
         }
         else
         {

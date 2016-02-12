@@ -44,6 +44,39 @@ class UsersModel
     public $pvpScore;
     public $def; // Не помню зачем это нужно
 
+    public $arrayStats = array(
+        'userId' => "",
+        'login' => "",
+        'password' => "",
+        'registrationIp' => "",
+        'lastLoginIp' => "",
+        'registerTime' => "",
+        'lastLoginTime' => "",
+        'failPassTry' => "",
+        'enterPassTime' => "",
+        'attackType' => "",
+        'minimumDamage' => "",
+        'maximumDamage' => "",
+        'currentSwordAttack' => "",
+        'currentBowAttack' => "",
+        'currentMagicAttack' => "",
+        'currentSwordShield' => "",
+        'currentBowShield' => "",
+        'currentMagicShield' => "",
+        'maximumHitPoints' => "",
+        'currentHitPoints' => "",
+        'experience' => "",
+        'spentExperience' => "",
+        'currentGold' => "",
+        'questGold' => "",
+        'questId' => "",
+        'questStep' => "",
+        'maximumLevelQuest' => "",
+        'enemyId' => "",
+        'pvpScore' => "",
+        'def' => "",
+    );
+
     //public $userInfo = array();
 
 
@@ -85,6 +118,7 @@ class UsersModel
         $this->enemyId = $result['enemy_id'];
         $this->pvpScore = $result['pvp_score'];
         //...
+
     }
 
     // Извлечение данных для логина;
@@ -94,12 +128,33 @@ class UsersModel
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
-        $this->login = $result['id'];
+        // Логин удачен или нет, и код ошибки.
+
+        // Проверка логина - количество элементов в массиве дата
+        if ($result['login'])
+        {
+            // Проверка таймаута пользователя
+
+            // Проверка пароля - $this->password
+            if ($data[0]['pass']==md5($password))
+            {
+                // Сессию [id] = $userId; В КОНТРОЛЛЕРЕ
+
+            }
+                else
+            {
+                // увеличиваем количество ошибочных вводов и время последнего ввода апдейтим;
+            }
+        }
+
+        $this->userId = $result['id'];
         $this->login = $result['login'];
         $this->password = $result['pass'];
         $this->registerTime = $result['register_time'];
         $this->lastLoginTime = $result['last_time'];
         $this->failPassTry = $result['pass_try'];
+
+        // Если проходит -
 
         //echo 'ID: ';
 

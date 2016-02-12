@@ -7,10 +7,12 @@
  */
 $check = 1;
 include "config.php";
+include 'core/Routing.php';
 $requestData = $_REQUEST;
-require_once 'core/Routing.php';
+// Можно сделать конструктором;
 $myRouting = new Routing();
+
 $myRouting->routingStart($requestData);
-$myRouting->printParse();
+//$myRouting->printParse();
 
 ?>

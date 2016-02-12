@@ -14,6 +14,22 @@ class UsersController
     {
     }
 
+    // ЛОГИН;
+    public function loginAction($requestData)
+    {
+        // Подключаем модель Users
+        include '/models/Users.php';
+        //
+        $login = htmlspecialchars($requestData['login']);
+        $password = htmlspecialchars($requestData['password']);
+        $user = new UsersModel();
+        $user->readUserByLogin($login, $password);
+
+        // Проводим проверку на совпадение логина и пароля.
+        // Вернуть Роутингу страницу и текст.
+
+    }
+
 
     // Выводим информацию по персонажу и его инвентарю.
     public function userInfo($userId)
