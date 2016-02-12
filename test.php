@@ -1,7 +1,7 @@
 <?php
 $check=1;
 include "config.php";
-include 'controllers/UsersController2.php';
+include 'controllers/UsersController.php';
 include 'models/Users.php';
 
 $hero = new UsersController();
