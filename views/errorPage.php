@@ -6,8 +6,8 @@
  * Time: 17:59
  */
 
-echo '<div style="font-size: 34pt;  color: #0e1dff;">Grind Error Page</div>';
-echo '<h1>GEP Message: '.$myRouting->$errorMessage.'</h1>';
+echo '<div style="font-size: 34pt;  ">Grind Error Page</div><br>';
+echo '<div style="font-size: 14pt;  ">GEP Message: ' .$this->errorMessage.'</div>';
 
 ?>
 

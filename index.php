@@ -9,6 +9,7 @@ $check = 1;
 include "config.php";
 include 'core/Routing.php';
 $requestData = $_REQUEST;
+//print_r ($requestData);
 // Можно сделать конструктором;
 $myRouting = new Routing();
 

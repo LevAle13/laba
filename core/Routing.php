@@ -26,8 +26,11 @@ class Routing
         $this->requestData = $requestData;
         $this->parseUrl($_SERVER['REQUEST_URI']);
 
-        if ($this->resultParse== true)
+//        echo '100<br>';
+
+        if ($this->resultParse== 'true')
         {
+
             if ($this->loadClass() == true)
             {
                 $this->actionController();
@@ -48,22 +51,24 @@ class Routing
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
-        $this->resultParse = true;
+        $this->resultParse = 'true';
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))
         {
-            $this->resultParse = false;
+            $this->resultParse = 'false';
             $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action '.$this->parse['1'].' is absent!';
+            $this->errorMessage = 'Action is empty!';
         }
 
         // Проверка на пустой контроллер;
         if ($this->controller == 'Controller')
         {
-            $this->resultParse = false;
+            $this->resultParse = 'false';
             $this->returnPage = 'index';
+
         }
+
 
 //        $this->printParse();
     }
@@ -76,14 +81,12 @@ class Routing
         echo '<br><br>Action: '.$this->action;
         echo '<br><br>Value: '.$this->parseValue;
         echo '<br><br>Login: '.$this->requestData['login'];
-        echo '<br><br>Password: '.$this->requestData['pass'];
+        echo '<br><br>Password: '.$this->requestData['password'];
     }
 
     // Подгружаем необходимые классы для основного метода, на основе массива;
     public function loadClass()
     {
-
-
         $filename = 'controllers/'.$this->controller.'.php';
 
 
@@ -95,12 +98,12 @@ class Routing
         else
         {
             $loadResult = false;
-            $this->resultParse = false;
+            $this->resultParse = 'false';
             $this->returnPage = 'errorPage';
             $this->errorMessage = 'Controller file: '.$filename.' is absent!';
         }
 
-        //return $loadResult;
+        return $loadResult;
 
     }
 
@@ -115,12 +118,14 @@ class Routing
             $actionBegin = $this->action;
             $newAction->$actionBegin($this->requestData);
 
+            $this->returnPage = 'main';
+
 
         }
         else
         {
             $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action '.$this->action.' is absent!';
+            $this->errorMessage = 'Action "'.$this->action.'" is absent!';
 
 
         }
