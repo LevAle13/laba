@@ -63,7 +63,7 @@
 
             <font size="3" face="Tahoma"><b><center>ВХОД</center></b></font></td></tr></table><br></center>
 
-            <form action="login.php" method="POST">
+            <form action="Users/login" method="POST">
                 <font size="2" face="Tahoma"><b>Логин:</b><br></font><input type="text" name="login" style=" width:100%;" /><br>
                 <font size="2" face="Tahoma"><b>Пароль:</b><br></font><input type="password" name="pass"  style=" width:100%;"  />
                 <center>

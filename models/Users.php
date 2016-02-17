@@ -44,6 +44,9 @@ class Users
     public $pvpScore;
     public $def; // Не помню зачем это нужно
 
+    // Системные поля
+    public $loginAction = false;
+
     public $arrayStats = array(
         'userId' => "",
         'login' => "",
@@ -87,7 +90,6 @@ class Users
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
-        //$this->printArray($result);
         $this->writeDataToArray($result);
 
     }
@@ -95,49 +97,16 @@ class Users
     // Перенос полученных данных в поля и массив;
     public function writeDataToArray($data)
     {
-        //$result = $data;
-/*
-        $this->login = $result['login'];
-        $this->password = $result['password'];
-        $this->registrationIp = $result['reg_ip'];
-        $this->lastLoginIp = $result['last_ip'];
-        $this->registerTime = $result['register_time'];
-        $this->lastLoginTime = $result['last_time'];
-        $this->failPassTry = $result['pass_try'];
-        $this->enterPassTime = $result['pass_time'];
-        $this->attackType = $result['tip_at'];
-        $this->minimumDamage = $result['min_dmg'];
-        $this->maximumDamage = $result['max_dmg'];
-        $this->currentSwordAttack = $result['at_s'];
-        $this->currentBowAttack = $result['at_b'];
-        $this->currentMagicAttack = $result['at_m'];
-        $this->currentSwordShield = $result['sh_s'];
-        $this->currentBowShield = $result['sh_b'];
-        $this->currentMagicShield = $result['sh_m'];
-        $this->maximumHitPoints = $result['hp_max'];
-        $this->currentHitPoints = $result['hp_tek'];
-        $this->experience = $result['xp'];
-        $this->spentExperience = $result['spend_xp'];
-        $this->currentGold = $result['gold'];
-        $this->questGold = $result['gold_temp'];
-        $this->questId = $result['quest_id'];
-        $this->questStep = $result['quest_step'];
-        $this->maximumLevelQuest = $result['quest_max'];
-        $this->enemyId = $result['enemy_id'];
-        $this->pvpScore = $result['pvp_score'];
-*/
-
         foreach($data as $key => $value)
         {
             $this->$key = $value;
 
-            $this->arrayStats['.$key.'] = $value;
+            $this->arrayStats[''.$key.''] = $value;
 
-            echo $key.' = '.$this->$key.'<br>';
+            //echo $key.' = '.$this->$key.'<br>';
         }
 
-
-
+ //       print_r($this->arrayStats);
     }
 
     // Хочу вывести массив на экран;
@@ -161,15 +130,18 @@ class Users
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
-        // Логин удачен или нет, и код ошибки.
+        // Логин удачен или нет, и код ошибки;
 
-        // Проверка логина - количество элементов в массиве дата
+        // Проверка логина - количество элементов в массиве дата;
         if ($result['login'])
         {
+            $this->writeDataToArray($result);
+            $this->loginAction = true;
+
             // Проверка таймаута пользователя
 
             // Проверка пароля - $this->password
-            if ($data[0]['password']==md5($password))
+            if ($this->password == md5($password))
             {
                 // Сессию [id] = $userId; В КОНТРОЛЛЕРЕ
 
@@ -179,14 +151,11 @@ class Users
                 // увеличиваем количество ошибочных вводов и время последнего ввода апдейтим;
             }
         }
-
-        $this->userId = $result['userId'];
-        $this->login = $result['login'];
-        $this->password = $result['password'];
-        $this->registerTime = $result['registerTime'];
-        $this->lastLoginTime = $result['lastLoginTime'];
-        $this->failPassTry = $result['failPassTry'];
-
+        else
+        {
+            // Логин не найден;
+            $this->loginAction = false;
+        }
 
         // Если проходит -
 

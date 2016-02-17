@@ -22,7 +22,7 @@ class UsersController
         //
         $login = htmlspecialchars($requestData['login']);
         $password = htmlspecialchars($requestData['password']);
-        $user = new UsersModel();
+        $user = new Users();
         $user->readUserByLogin($login, $password);
 
         // Проводим проверку на совпадение логина и пароля.
@@ -34,7 +34,7 @@ class UsersController
     // Выводим информацию по персонажу и его инвентарю.
     public function userInfo($userId)
     {
-        $user = new UsersModel();
+        $user = new Users();
         $user->readUser($userId);
         // ...Вызов класса рендеринга страницы...
         // ----
