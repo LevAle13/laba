@@ -7,7 +7,7 @@
  */
 
 
-class UsersModel
+class Users
 {
 
     // Параметры учетки
@@ -83,14 +83,22 @@ class UsersModel
     // Считываем все данные пользователя по его айди
     public function readUser($userId)
     {
-        $sql = xquery ("select * from users where id='" . $userId . "'");
+        $sql = xquery ("select * from users where userId='" . $userId . "'");
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
-        //$user = new UsersModel();
+        //$this->printArray($result);
+        $this->writeDataToArray($result);
 
+    }
+
+    // Перенос полученных данных в поля и массив;
+    public function writeDataToArray($data)
+    {
+        //$result = $data;
+/*
         $this->login = $result['login'];
-        $this->password = $result['pass'];
+        $this->password = $result['password'];
         $this->registrationIp = $result['reg_ip'];
         $this->lastLoginIp = $result['last_ip'];
         $this->registerTime = $result['register_time'];
@@ -117,14 +125,39 @@ class UsersModel
         $this->maximumLevelQuest = $result['quest_max'];
         $this->enemyId = $result['enemy_id'];
         $this->pvpScore = $result['pvp_score'];
-        //...
+*/
+
+        foreach($data as $key => $value)
+        {
+            $this->$key = $value;
+
+            $this->arrayStats['.$key.'] = $value;
+
+            echo $key.' = '.$this->$key.'<br>';
+        }
+
+
+
+    }
+
+    // Хочу вывести массив на экран;
+    public function printArray($data)
+    {
+
+
+        foreach($data as $key => $value)
+        {
+            echo $key.' = '.$value.'<br>';
+        }
+
+        //print_r($data);
 
     }
 
     // Извлечение данных для логина;
     public function readUserByLogin($login,$password)
     {
-        $sql = xquery ("select id, login, pass, last_time, pass_try, pass_time from users where login='". $login ."'");
+        $sql = xquery ("select * from users where login='". $login ."'");
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
@@ -136,7 +169,7 @@ class UsersModel
             // Проверка таймаута пользователя
 
             // Проверка пароля - $this->password
-            if ($data[0]['pass']==md5($password))
+            if ($data[0]['password']==md5($password))
             {
                 // Сессию [id] = $userId; В КОНТРОЛЛЕРЕ
 
@@ -147,12 +180,13 @@ class UsersModel
             }
         }
 
-        $this->userId = $result['id'];
+        $this->userId = $result['userId'];
         $this->login = $result['login'];
-        $this->password = $result['pass'];
-        $this->registerTime = $result['register_time'];
-        $this->lastLoginTime = $result['last_time'];
-        $this->failPassTry = $result['pass_try'];
+        $this->password = $result['password'];
+        $this->registerTime = $result['registerTime'];
+        $this->lastLoginTime = $result['lastLoginTime'];
+        $this->failPassTry = $result['failPassTry'];
+
 
         // Если проходит -
 

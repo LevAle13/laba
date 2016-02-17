@@ -34,7 +34,7 @@ class Routing
         }
 
         // Вызываем вьюху;
-        include $this->returnPage.'.php';
+        include 'views/'.$this->returnPage.'.php';
     }
 
     // Парсим адресную строку;
@@ -48,12 +48,6 @@ class Routing
         $this->parseValue = $this->parse['2'];
 
         $this->resultParse = 'true';
-        // Проверка на пустой контроллер;
-        if ($this->controller == 'Controller')
-        {
-            $this->resultParse = 'index';
-            $this->returnPage = 'index';
-        }
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))
@@ -62,6 +56,15 @@ class Routing
             $this->returnPage = 'errorPage';
             $this->errorMessage = 'Action is absent!';
         }
+
+        // Проверка на пустой контроллер;
+        if ($this->controller == 'Controller')
+        {
+            $this->resultParse = 'index';
+            $this->returnPage = 'index';
+        }
+
+
 
 //        $this->printParse();
     }
