@@ -12,6 +12,7 @@ class Routing
     public $action;
     public $parseValue;
     public $parse;
+    // Хранятся данные полученные через POST and GET
     public $requestData;
     public $returnPage;
     public $resultParse;
@@ -22,10 +23,10 @@ class Routing
     public function routingStart($requestData)
     {
         // Нужен код для проверки пользовательских данных;
-        $this->requestData=$requestData;
+        $this->requestData = $requestData;
         $this->parseUrl($_SERVER['REQUEST_URI']);
 
-        if ($this->resultParse== 'true')
+        if ($this->resultParse== true)
         {
             if ($this->loadClass() == true)
             {
@@ -47,24 +48,22 @@ class Routing
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
-        $this->resultParse = 'true';
+        $this->resultParse = true;
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))
         {
-            $this->resultParse = 'error';
+            $this->resultParse = false;
             $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action is absent!';
+            $this->errorMessage = 'Action '.$this->parse['1'].' is absent!';
         }
 
         // Проверка на пустой контроллер;
         if ($this->controller == 'Controller')
         {
-            $this->resultParse = 'index';
+            $this->resultParse = false;
             $this->returnPage = 'index';
         }
-
-
 
 //        $this->printParse();
     }
@@ -96,12 +95,12 @@ class Routing
         else
         {
             $loadResult = false;
-            $this->resultParse = 'error';
+            $this->resultParse = false;
             $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action is absent!';
+            $this->errorMessage = 'Controller file: '.$filename.' is absent!';
         }
 
-        return $loadResult;
+        //return $loadResult;
 
     }
 
@@ -122,6 +121,7 @@ class Routing
         {
             $this->returnPage = 'errorPage';
             $this->errorMessage = 'Action '.$this->action.' is absent!';
+
 
         }
     }
