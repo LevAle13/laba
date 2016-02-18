@@ -17,6 +17,7 @@ class Routing
     public $returnPage;
     public $resultParse;
     public $resultView;
+    public $returnMessage;
     public $errorMessage;
 
     // Точка входа на Роутинг;
@@ -118,9 +119,8 @@ class Routing
             $actionBegin = $this->action;
             $newAction->$actionBegin($this->requestData);
 
-            //$this->returnPage = 'main';
-
-
+            $this->returnPage = $newAction->arrayResult['returnPage'];
+            $this->returnMessage = $newAction->arrayResult['returnMessage'];
         }
         else
         {

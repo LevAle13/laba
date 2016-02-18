@@ -63,9 +63,6 @@ class UsersController
             }
             else
             {
-                $this->arrayResult['returnPage'] = 'index';
-                $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль!';
-
                 //Если последняя авторизация была в течении ближайших 5 минут, увеличиваем счетчик не верных авторизаций на 1, иначе обнуляем счетчик до значения 1
                 if ($user->lastLoginTime+5*60>$currentTime)
                 {
@@ -96,6 +93,9 @@ class UsersController
 
                     $user->updateFields($fields,$condition);
                 }
+
+                $this->arrayResult['returnPage'] = 'index';
+                $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль!';
                 return false;
             }
         }

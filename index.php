@@ -6,7 +6,9 @@
  * Time: 22:53
  */
 $check = 1;
+//header('Location: http://178.150.197.121/');
 include "config.php";
+
 include 'core/Routing.php';
 $requestData = $_REQUEST;
 //print_r ($requestData);

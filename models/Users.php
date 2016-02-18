@@ -164,9 +164,6 @@ class Users
 
         echo 'SQL QUERY: '.$sqlText;
         //$sql=xquery("'".$sqlText."'");
-
-        //$sql=xquery('update users set last_time="'.$tm.'",last_ip="'.$ip.'" where id="'.$_SESSION['id'].'"');
-
     }
 
     // Загружаем список скилов в массив $skillsArray()
