@@ -9,6 +9,12 @@
 class UsersController
 {
 
+    public $arrayResult = array(
+        'returnPage' => "",
+        'returnMessage' => "",
+        'errorMessage' => "",
+    );
+
     // Конструктор.
     public function __construct()
     {
@@ -23,10 +29,82 @@ class UsersController
         $login = htmlspecialchars($requestData['login']);
         $password = htmlspecialchars($requestData['password']);
         $user = new Users();
-        $user->readUserByLogin($login, $password);
 
-        // Проводим проверку на совпадение логина и пароля.
-        // Вернуть Роутингу страницу и текст.
+        if ($user->readUserByLogin($login) == true)
+        {
+            // Проверка таймаута пользователя
+            $currentTime=time();
+            if (($user->lastLoginTime+5*60>$currentTime) and ($user->failPassTry>4))
+            {
+                $this->arrayResult['returnPage'] = 'index';
+                $this->arrayResult['returnMessage'] = 'Вы не правильно набрали пароль 5 раз! Ожидайте 5 минут!';
+                return false;
+            }
+
+            // Проверка пароля - $this->password
+            if ($user->password == md5($password))
+            {
+                $_SESSION['id']= $user->userId;
+
+                $fields = array(
+                    'lastLoginTime' => $currentTime,
+                    'lastLoginIp' => $_SERVER['REMOTE_ADDR'],
+                );
+
+                $condition = array(
+                    'userId' => $user->userId,
+                );
+
+                $user->updateFields($fields,$condition);
+
+                $this->arrayResult['returnPage'] = 'redirect';
+                $this->arrayResult['returnMessage'] = 'Успешная авторизация. Нажмите на ссылку ниже для перехода в игру.';
+                return true;
+            }
+            else
+            {
+                $this->arrayResult['returnPage'] = 'index';
+                $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль!';
+
+                //Если последняя авторизация была в течении ближайших 5 минут, увеличиваем счетчик не верных авторизаций на 1, иначе обнуляем счетчик до значения 1
+                if ($user->lastLoginTime+5*60>$currentTime)
+                {
+                    $fields = array(
+                        'lastLoginTime' => $currentTime,
+                        'lastLoginIp' => $_SERVER['REMOTE_ADDR'],
+                        'failPassTry' => ($user->failPassTry=$user->failPassTry+1),
+                    );
+
+                    $condition = array(
+                        'login' => $login,
+                    );
+
+                    $user->updateFields($fields,$condition);
+
+                }
+                else
+                {
+                    $fields = array(
+                        'lastLoginTime' => $currentTime,
+                        'lastLoginIp' => $_SERVER['REMOTE_ADDR'],
+                        'failPassTry' => 1,
+                    );
+
+                    $condition = array(
+                        'login' => $login,
+                    );
+
+                    $user->updateFields($fields,$condition);
+                }
+                return false;
+            }
+        }
+        else
+        {
+            $this->arrayResult['returnPage'] = 'index';
+            $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль!';
+            return false;
+        }
 
     }
 

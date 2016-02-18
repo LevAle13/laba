@@ -100,13 +100,9 @@ class Users
         foreach($data as $key => $value)
         {
             $this->$key = $value;
-
             $this->arrayStats[''.$key.''] = $value;
-
-            //echo $key.' = '.$this->$key.'<br>';
         }
 
- //       print_r($this->arrayStats);
     }
 
     // Хочу вывести массив на экран;
@@ -124,9 +120,9 @@ class Users
     }
 
     // Извлечение данных для логина;
-    public function readUserByLogin($login,$password)
+    public function readUserByLogin($login)
     {
-        $sql = xquery ("select * from users where login='". $login ."'");
+        $sql = xquery ("select * from users where login='". $login ."' LIMIT 1");
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
@@ -136,43 +132,40 @@ class Users
         if ($result['login'])
         {
             $this->writeDataToArray($result);
-            $this->loginAction = true;
-
-            // Проверка таймаута пользователя
-
-            // Проверка пароля - $this->password
-            if ($this->password == md5($password))
-            {
-                // Сессию [id] = $userId; В КОНТРОЛЛЕРЕ
-
-            }
-                else
-            {
-                // увеличиваем количество ошибочных вводов и время последнего ввода апдейтим;
-            }
+            return true;
         }
         else
         {
-            // Логин не найден;
-            $this->loginAction = false;
+            return false;
         }
-
-        // Если проходит -
-
-        //echo 'ID: ';
-
     }
 
 
     // Загружаем выбранные поля
-    public function loadFields($fields)
+    public function loadFields($fields,$condition)
     {
 
     }
 
     // Упдайтеми нужные поля
-    public function updateFields($fields)
+    public function updateFields($fields,$condition)
     {
+        $sqlText = 'update users set';
+        foreach($fields as $key => $value) {
+            $sqlText = $sqlText .' '. $key . '="' . $value . '",';
+        }
+        // Убираем последнюю запятую;
+        $sqlText = substr($sqlText, 0, -1);
+
+        foreach($condition as $key => $value)
+        {
+            $sqlText=$sqlText.' where '.$key.' = "'.$value.'"';
+        }
+
+        echo 'SQL QUERY: '.$sqlText;
+        //$sql=xquery("'".$sqlText."'");
+
+        //$sql=xquery('update users set last_time="'.$tm.'",last_ip="'.$ip.'" where id="'.$_SESSION['id'].'"');
 
     }
 

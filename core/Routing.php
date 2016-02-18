@@ -118,7 +118,7 @@ class Routing
             $actionBegin = $this->action;
             $newAction->$actionBegin($this->requestData);
 
-            $this->returnPage = 'main';
+            //$this->returnPage = 'main';
 
 
         }
