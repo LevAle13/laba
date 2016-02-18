@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Проект Гринд</title>
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="/css/bootstrap.css" rel="stylesheet">
 
 
 </head>
@@ -24,7 +24,7 @@
     <header>
       <div class="container">
         <!--Содержимое-->
-		<IMG src="pic/top1.jpg" class="img-responsive" class="img-rounded"  width="100%">
+		<IMG src="/pic/top1.jpg" class="img-responsive" class="img-rounded"  width="100%">
       </div>
     </header>
     <main>
@@ -49,7 +49,7 @@
 
 
 			<?php
-			  include 'parser.php';
+			  include '/parser.php';
 
 			?>
 
@@ -63,7 +63,7 @@
 
             <font size="3" face="Tahoma"><b><center>ВХОД</center></b></font></td></tr></table><br></center>
 
-            <form action="Users/login" method="POST">
+            <form action="/Users/login" method="POST">
                 <font size="2" face="Tahoma"><b>Логин:</b><br></font><input type="text" name="login" style=" width:100%;" /><br>
                 <font size="2" face="Tahoma"><b>Пароль:</b><br></font><input type="password" name="pass"  style=" width:100%;"  />
                 <center>
