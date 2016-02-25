@@ -13,8 +13,9 @@ class UsersController
         'returnPage' => "",
         'returnMessage' => "",
         'errorMessage' => "",
-        'heroInfo' => "",
     );
+
+    public $heroInfo;
 
     // Конструктор.
     public function __construct()
@@ -61,7 +62,7 @@ class UsersController
                 $user->updateFields($fields,$condition);
 
                 $this->arrayResult['returnPage'] = 'redirect';
-                $this->arrayResult['returnMessage'] = 'Успешная авторизация. Нажмите на ссылку ниже для перехода в игру.<br><A HREF="/User/main">Продолжить</A>';
+                $this->arrayResult['returnMessage'] = 'Успешная авторизация. Нажмите на ссылку ниже для перехода в игру.<br><A HREF="/Users/main">Продолжить</A>';
                 return true;
             }
             else
@@ -123,23 +124,15 @@ class UsersController
         {
             $user = new Users();
             $user->readUserById($_SESSION['userId']);
-
             $this->arrayResult['returnPage'] = 'main';
-            $this->getHeroInfo();
+            $this->heroInfo = $user;
 
-
+            //return $user;
 
         }
 
     }
 
-    // Формируем Информацию о Герое;
-    public function getHeroInfo()
-    {
-        $this->arrayResult['heroInfo'] = '';
-
-        $heroText = $user->login.'<br>';
-    }
 
     // Проверка на наличие сессии у пользователя;
     public function checkSession()

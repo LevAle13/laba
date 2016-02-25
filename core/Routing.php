@@ -19,6 +19,9 @@ class Routing
     public $resultView;
     public $returnMessage;
     public $errorMessage;
+    public $controllerData;
+    public $heroInfo;
+
 
     // Точка входа на Роутинг;
     public function routingStart($requestData)
@@ -40,7 +43,7 @@ class Routing
 
         // Вызываем вьюху;
 
-        include 'views/'.$this->returnPage.'.php';
+        include '/views/'.$this->returnPage.'.php';
     }
 
     // Парсим адресную строку;
@@ -67,7 +70,7 @@ class Routing
         if ($this->controller == 'Controller')
         {
             $this->resultParse = 'false';
-            $this->returnPage = 'errorPage';
+            $this->returnPage = 'index';
             $this->errorMessage = 'Controller is empty!';
         }
 
@@ -94,15 +97,15 @@ class Routing
 
         if (file_exists($filename))
         {
-            $loadResult = true;
             include ($filename);
+            $loadResult = true;
         }
         else
         {
-            $loadResult = false;
             $this->resultParse = 'false';
             $this->returnPage = 'errorPage';
             $this->errorMessage = 'Controller file: '.$filename.' is absent!';
+            $loadResult = false;
         }
 
         return $loadResult;
@@ -119,6 +122,12 @@ class Routing
         {
             $actionBegin = $this->action;
             $newAction->$actionBegin($this->requestData);
+
+            $this->heroInfo = $newAction->heroInfo;
+
+            //echo "Что выняли: <br>";
+            //print_r($this->controllerData);
+            //echo '<br> EEXPA: '.$this->controllerData->experience;
 
             $this->returnPage = $newAction->arrayResult['returnPage'];
             $this->returnMessage = $newAction->arrayResult['returnMessage'];

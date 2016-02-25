@@ -9,7 +9,6 @@
 
 class Users
 {
-
     // Параметры учетки
     public $userId;
     public $login;
@@ -47,6 +46,7 @@ class Users
     // Системные поля
     public $loginAction = false;
 
+    // Все данные представленные в массиве;
     public $arrayStats = array(
         'userId' => "",
         'login' => "",
@@ -80,9 +80,6 @@ class Users
         'def' => "",
     );
 
-    //public $userInfo = array();
-
-
     // Считываем все данные пользователя по его айди
     public function readUser($userId)
     {
@@ -91,7 +88,6 @@ class Users
         $result = $data[0];
 
         $this->writeDataToArray($result);
-
     }
 
     // Перенос полученных данных в поля и массив;
@@ -161,14 +157,7 @@ class Users
         }
     }
 
-
-    // Загружаем выбранные поля
-    public function loadFields($fields,$condition)
-    {
-
-    }
-
-    // Упдайтеми нужные поля
+    // Упдайтеми нужные поля;
     public function updateFields($fields,$condition)
     {
         $sqlText = 'update users set';
@@ -196,7 +185,13 @@ class Users
         //echo '<br>SQL QUERY: '.$sqlText;
     }
 
-    // Загружаем список скилов в массив $skillsArray()
+    // Загружаем выбранные поля;
+    public function loadFields($fields,$condition)
+    {
+
+    }
+
+    // Загружаем список скилов в массив $skillsArray();
     public function loadSkills()
     {
 
