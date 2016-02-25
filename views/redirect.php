@@ -32,7 +32,7 @@
             <div class="row" style ="border: 1px solid blue;">
                     <div class="lead" style = 'text-align: center;'>
                          <?php
-                             echo $this->returnMessage;
+                             echo $viewsData['returnMessage'];
                          ?>
                     </div>
             </div>

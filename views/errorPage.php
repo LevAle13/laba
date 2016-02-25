@@ -24,9 +24,9 @@ header("HTTP/1.0 404 Not Found");
 
 <?php
 
-echo '<div style="font-size: 34pt;  ">Grind Error Page</div><br>';
-echo '<div style="font-size: 14pt;  ">GEP Message: ' .$this->errorMessage.'<br></div>';
-echo '<div style="font-size: 14pt;  "><A HREF="/">Вернуться на центральную страницу</A></div>';
+echo '<p><div style="font-size: 34pt; padding: 10px; text-align: center;">Grind Error Page</div><br></p>';
+echo '<p><div style="font-size: 14pt; padding: 10px; text-align: center;">'.$viewsData['errorMessage'].'<br></div><br></p>';
+echo '<p><div style="font-size: 14pt; padding: 10px; text-align: center;"><A HREF="/">Вернуться на центральную страницу</A></div></p>';
 
 ?>
 

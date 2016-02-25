@@ -16,6 +16,8 @@ class UsersController
     );
 
     public $heroInfo;
+    public $itemData;
+    public $enemyData;
 
     // Конструктор.
     public function __construct()
@@ -36,11 +38,12 @@ class UsersController
         {
             // Проверка таймаута пользователя
             $currentTime=time();
-            if (($user->lastLoginTime+5*60>$currentTime) and ($user->failPassTry>4))
+            if ((($user->enterPassTime+5*60)>$currentTime) and ($user->failPassTry>4))
             {
-                $this->arrayResult['returnPage'] = 'redirect';
-                $this->arrayResult['returnMessage'] = 'Вы не правильно набрали пароль 5 раз! Ожидайте 5 минут!<br><A HREF="/">Вернуться на центральную страницу</A>';
-                return false;
+                $data = array();
+                $data['returnPage'] = 'redirect';
+                $data['returnMessage'] = 'Вы не правильно набрали пароль 5 раз! Ожидайте 5 минут!<br><A HREF="/">Вернуться на центральную страницу</A>';
+                return $data;
             }
 
             //echo 'login input: '.$login.'<br>pass input: '.$password.'<br>pass input md5: '. md5($password).'<br>pass bd: '.$user->password.'<br>';
@@ -61,9 +64,10 @@ class UsersController
 
                 $user->updateFields($fields,$condition);
 
-                $this->arrayResult['returnPage'] = 'redirect';
-                $this->arrayResult['returnMessage'] = 'Успешная авторизация. Нажмите на ссылку ниже для перехода в игру.<br><A HREF="/Users/main">Продолжить</A>';
-                return true;
+                $data = array();
+                $data['returnPage'] = 'redirect';
+                $data['returnMessage'] = 'Успешная авторизация. Нажмите на ссылку ниже для перехода в игру.<br><A HREF="/Users/main">Продолжить</A>';
+                return $data;
             }
             else
             {
@@ -101,16 +105,18 @@ class UsersController
                     $user->updateFields($fields,$condition);
                 }
 
-                $this->arrayResult['returnPage'] = 'redirect';
-                $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль! <br><A HREF="/">Вернуться на центральную страницу</A>';
-                return false;
+                //$data = array();
+                $data['returnPage'] = 'redirect';
+                $data['returnMessage'] = 'Вы ввели не правильный пароль! <br><A HREF="/">Вернуться на центральную страницу</A>';
+                return $data;
             }
         }
         else
         {
-            $this->arrayResult['returnPage'] = 'redirect';
-            $this->arrayResult['returnMessage'] = 'Вы ввели не правильный пароль! <br><A HREF="/">Вернуться на центральную страницу</A>';
-            return false;
+            $data = array();
+            $data['returnPage'] = 'redirect';
+            $data['returnMessage'] = 'Вы ввели не правильный пароль! <br><A HREF="/">Вернуться на центральную страницу</A>';
+            return $data;
         }
 
     }
@@ -118,16 +124,28 @@ class UsersController
     // Основной игровой экран;
     public function mainAction($requestData)
     {
-        // Подключаем модель Users;
         include '/models/Users.php';
-        if ($this->checkSession() == true)
+
+        $data = $this->checkSession();
+
+        if ($data['sessionCheck'] == true)
         {
             $user = new Users();
             $user->readUserById($_SESSION['userId']);
-            $this->arrayResult['returnPage'] = 'main';
-            $this->heroInfo = $user;
 
-            //return $user;
+
+            $data['returnPage'] = 'main';
+            //$this->heroInfo = $user;
+
+            include '/models/Items.php';
+            $item = new Items();
+
+
+            $data['returnPage'] = 'main';
+            $data['user'] = $user;
+            $data['item'] = $item->getEquipmentItem($user->userId);
+
+            return $data;
 
         }
 
@@ -140,14 +158,16 @@ class UsersController
         // Проверяем наличие сессии;
         if (isset($_SESSION['userId']))
         {
-            return true;
+            $data['sessionCheck'] = true;
+            return $data;
         }
         else
         {
             // Если сессия не найдена - выкидываем на центральную страничку;
-            $this->arrayResult['returnPage'] = 'redirect';
-            $this->arrayResult['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
-            return false;
+            $data['returnPage'] = 'redirect';
+            $data['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
+            $data['sessionCheck'] = false;
+            return $data;
         }
     }
 

@@ -14,13 +14,8 @@ class Routing
     public $parse;
     // Хранятся данные полученные через POST and GET
     public $requestData;
-    public $returnPage;
-    public $resultParse;
-    public $resultView;
-    public $returnMessage;
-    public $errorMessage;
-    public $controllerData;
-    public $heroInfo;
+
+    public $data = array();
 
 
     // Точка входа на Роутинг;
@@ -30,9 +25,7 @@ class Routing
         $this->requestData = $requestData;
         $this->parseUrl($_SERVER['REQUEST_URI']);
 
-//        echo '100<br>';
-
-        if ($this->resultParse == 'true')
+        if ($this->data['resultParse'] == true)
         {
 
             if ($this->loadClass() == true)
@@ -42,8 +35,12 @@ class Routing
         }
 
         // Вызываем вьюху;
+        //echo " <br> Return page:".$this->data['returnPage']." <br>";
 
-        include '/views/'.$this->returnPage.'.php';
+        $viewsData = $this->data;
+
+        //print_r($viewsData);
+        include '/views/'.$this->data['returnPage'].'.php';
     }
 
     // Парсим адресную строку;
@@ -56,26 +53,23 @@ class Routing
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
-        $this->resultParse = 'true';
+        $this->data['resultParse'] = true;
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))
         {
-            $this->resultParse = 'false';
-            $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action is empty!';
+            $this->data['resultParse'] = false;
+            $this->data['returnPage'] = 'errorPage';
+            $this->data['errorMessage'] = 'Action is empty!';
         }
 
         // Проверка на пустой контроллер;
         if ($this->controller == 'Controller')
         {
-            $this->resultParse = 'false';
-            $this->returnPage = 'index';
-            $this->errorMessage = 'Controller is empty!';
+            $this->data['resultParse'] = false;
+            $this->data['returnPage'] = 'index';
         }
 
-
-//        $this->printParse();
     }
 
     // Вывод на экран; Вспомогательный метод для отслеживания передаваемых данных;
@@ -98,18 +92,15 @@ class Routing
         if (file_exists($filename))
         {
             include ($filename);
-            $loadResult = true;
+            return true;
         }
         else
         {
-            $this->resultParse = 'false';
-            $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Controller file: '.$filename.' is absent!';
-            $loadResult = false;
+            $this->data['resultParse'] = false;
+            $this->data['returnPage'] = 'errorPage';
+            $this->data['errorMessage'] = 'Controller file: '.$filename.' is absent!';
+            return false;
         }
-
-        return $loadResult;
-
     }
 
     // Создаем объект контроллера на основе полученных данных и вызываем метод action;
@@ -121,23 +112,23 @@ class Routing
         if (method_exists($newAction,$this->action) == true)
         {
             $actionBegin = $this->action;
-            $newAction->$actionBegin($this->requestData);
 
-            $this->heroInfo = $newAction->heroInfo;
+            $this->data = $newAction->$actionBegin($this->requestData);
+            if (isset($newAction->heroInfo)) $this->heroInfo = $newAction->heroInfo;
+            if (isset($newAction->itemData)) $this->itemData = $newAction->itemData;
+            if (isset($newAction->enemyData)) $this->enemyData = $newAction->enemyData;
 
-            //echo "Что выняли: <br>";
-            //print_r($this->controllerData);
-            //echo '<br> EEXPA: '.$this->controllerData->experience;
+            //echo "Return page: ".$this->data['returnPage']." <br>";
+            //echo "RESULT JE: <br>";
+            //print_r($this->data);
 
-            $this->returnPage = $newAction->arrayResult['returnPage'];
-            $this->returnMessage = $newAction->arrayResult['returnMessage'];
+            //$this->data['returnPage'] = $newAction->arrayResult['returnPage'];
+            //$this->data['returnMessage'] = $newAction->arrayResult['returnMessage'];
         }
         else
         {
-            $this->returnPage = 'errorPage';
-            $this->errorMessage = 'Action "'.$this->action.'" is absent!';
-
-
+            $this->data['returnPage'] = 'errorPage';
+            $this->data['errorMessage'] = 'Action "'.$this->action.'" is absent!';
         }
     }
 
