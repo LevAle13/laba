@@ -140,6 +140,27 @@ class Users
         }
     }
 
+    // Извлечение данных для id;
+    public function readUserById($userId)
+    {
+        $sql = xquery ("select * from users where userId='". $userId ."' LIMIT 1");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        $result = $data[0];
+
+        // Логин удачен или нет, и код ошибки;
+
+        // Проверка логина - количество элементов в массиве дата;
+        if ($result['login'])
+        {
+            $this->writeDataToArray($result);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     // Загружаем выбранные поля
     public function loadFields($fields,$condition)

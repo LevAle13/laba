@@ -29,7 +29,7 @@ class Routing
 
 //        echo '100<br>';
 
-        if ($this->resultParse== 'true')
+        if ($this->resultParse == 'true')
         {
 
             if ($this->loadClass() == true)
@@ -67,7 +67,7 @@ class Routing
         if ($this->controller == 'Controller')
         {
             $this->resultParse = 'false';
-            $this->returnPage = 'index';
+            $this->returnPage = 'errorPage';
             $this->errorMessage = 'Controller is empty!';
         }
 

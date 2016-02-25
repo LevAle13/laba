@@ -13,6 +13,7 @@ class UsersController
         'returnPage' => "",
         'returnMessage' => "",
         'errorMessage' => "",
+        'heroInfo' => "",
     );
 
     // Конструктор.
@@ -20,7 +21,7 @@ class UsersController
     {
     }
 
-    // ЛОГИН;1
+    // ЛОГИН;
     public function loginAction($requestData)
     {
         // Подключаем модель Users
@@ -46,7 +47,7 @@ class UsersController
             if ($user->password == md5($password))
             // Успешная авторизация;
             {
-                $_SESSION['id']= $user->userId;
+                $_SESSION['userId']= $user->userId;
 
                 $fields = array(
                     'lastLoginTime' => $currentTime,
@@ -111,6 +112,50 @@ class UsersController
             return false;
         }
 
+    }
+
+    // Основной игровой экран;
+    public function mainAction($requestData)
+    {
+        // Подключаем модель Users;
+        include '/models/Users.php';
+        if ($this->checkSession() == true)
+        {
+            $user = new Users();
+            $user->readUserById($_SESSION['userId']);
+
+            $this->arrayResult['returnPage'] = 'main';
+            $this->getHeroInfo();
+
+
+
+        }
+
+    }
+
+    // Формируем Информацию о Герое;
+    public function getHeroInfo()
+    {
+        $this->arrayResult['heroInfo'] = '';
+
+        $heroText = $user->login.'<br>';
+    }
+
+    // Проверка на наличие сессии у пользователя;
+    public function checkSession()
+    {
+        // Проверяем наличие сессии;
+        if (isset($_SESSION['userId']))
+        {
+            return true;
+        }
+        else
+        {
+            // Если сессия не найдена - выкидываем на центральную страничку;
+            $this->arrayResult['returnPage'] = 'redirect';
+            $this->arrayResult['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
+            return false;
+        }
     }
 
 
