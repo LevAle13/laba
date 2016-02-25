@@ -73,7 +73,7 @@
             </center>
 
             <hr>
-            <font size="2" face="Tahoma"><center><b><A HREF="register.php">Регистрация</A></b></center></font>
+            <font size="2" face="Tahoma"><center><b><A HREF="/register.php">Регистрация</A></b></center></font>
 
 
         </div>

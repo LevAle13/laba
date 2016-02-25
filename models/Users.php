@@ -157,13 +157,21 @@ class Users
         // Убираем последнюю запятую;
         $sqlText = substr($sqlText, 0, -1);
 
+        // Вынимает один из параметров, так как будто их там много. Если же их там много - то он вообще сделает не правильный запрос;
+        /*
         foreach($condition as $key => $value)
         {
             $sqlText=$sqlText.' where '.$key.' = "'.$value.'"';
         }
+        */
+
+        $keyValue = key($condition);
+        $currentValue = current($condition);
+
+        $sqlText=$sqlText.' where '.$keyValue.' = ^S';
+        xquery("'".$sqlText."'", $currentValue);
 
         echo 'SQL QUERY: '.$sqlText;
-        //$sql=xquery("'".$sqlText."'");
     }
 
     // Загружаем список скилов в массив $skillsArray()
