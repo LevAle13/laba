@@ -35,7 +35,7 @@ class Routing
         }
 
         // Вызываем вьюху;
-        //echo " <br> Return page:".$this->data['returnPage']." <br>";
+        //echo " <br> Return page:".$this->data['returnPage']." <br> ";
 
         $viewsData = $this->data;
 
