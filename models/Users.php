@@ -169,9 +169,10 @@ class Users
         $currentValue = current($condition);
 
         $sqlText=$sqlText.' where '.$keyValue.' = ^S';
-        xquery("'".$sqlText."'", $currentValue);
+        $result = xquery($sqlText, $currentValue);
 
-        echo 'SQL QUERY: '.$sqlText;
+        //echo 'Результат запроса: '.$result;
+        //echo '<br>SQL QUERY: '.$sqlText;
     }
 
     // Загружаем список скилов в массив $skillsArray()

@@ -39,6 +39,7 @@ class Routing
         }
 
         // Вызываем вьюху;
+
         include 'views/'.$this->returnPage.'.php';
     }
 
@@ -67,7 +68,7 @@ class Routing
         {
             $this->resultParse = 'false';
             $this->returnPage = 'index';
-
+            $this->errorMessage = 'Controller is empty!';
         }
 
 
