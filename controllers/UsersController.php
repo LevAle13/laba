@@ -126,7 +126,8 @@ class UsersController
     {
         include '/models/Users.php';
 
-        $data = $this->checkSession();
+        //$data = $this->checkSession();
+        $data = $this::checkSession();
 
         if ($data['sessionCheck'] == true)
         {
@@ -146,14 +147,159 @@ class UsersController
             $data['item'] = $item->getEquipmentItem($user->userId);
 
             return $data;
+        }
+    }
 
+    public function registerAction($requestData)
+    {
+        $login = htmlspecialchars($requestData['login']);
+        $password1 = htmlspecialchars($requestData['password1']);
+        $password2 = htmlspecialchars($requestData['password2']);
+        $class = htmlspecialchars($requestData['class']);
+
+
+        //print_r($requestData);
+        //echo 'pass3: '.$password3;
+
+        // Если данные уже отосланы;
+        if ($login<>'')
+        {
+            // Проверка на пустой пароль;
+            if ($password1 == '')
+            {
+                $data['returnMessage'] = 'Введен пустой пароль!<br><A HREF="/Users/register">Вернуться к регистрации</A>';
+                $data['returnPage'] = 'redirect';
+                return $data;
+            }
+
+            // Проверка на не совпадение паролей;
+            if ($password1<>$password2)
+            {
+                $data['returnMessage'] = 'Пароли не совпадают!<br><A HREF="/Users/register">Вернуться к регистрации</A>';
+                $data['returnPage'] = 'redirect';
+                return $data;
+            }
+
+            // Проверка, указан ли класс персонажа;
+            if ($class == '')
+            {
+                $data['returnMessage'] = 'Не указан класс персонажа!<br><A HREF="/Users/register">Вернуться к регистрации</A>';
+                $data['returnPage'] = 'redirect';
+                return $data;
+            }
+
+            // Проверяем наличие подобного логина в базе;
+            include '/models/Users.php';
+            $user = new Users();
+            if (($user->readUserByLogin($login)) == true)
+            {
+                $data['returnMessage'] = 'Пользователь с данным именем уже существует!<br><A HREF="/Users/register">Вернуться к регистрации</A>';
+                $data['returnPage'] = 'redirect';
+                return $data;
+            };
+
+
+            $password=md5($password1);
+            $registerTime=time();
+
+            $user->login = $login;
+            $user->password = $password;
+            $user->registrationIp = $_SERVER['REMOTE_ADDR'];
+            $user->lastLoginIp = $_SERVER['REMOTE_ADDR'];
+            $user->registerTime = $registerTime;
+            $user->failPassTry = 0;
+
+            $user->currentSwordAttack = 0;
+            $user->currentBowAttack = 0;
+            $user->currentMagicAttack = 0;
+            $user->currentSwordShield = 0;
+            $user->currentBowShield = 0;
+            $user->currentMagicShield = 0;
+            $user->minimumDamage = 1;
+            $user->maximumDamage = 3;
+            $hitPoints=10;
+            //Буст робы
+            $boostHitPoints=1;
+            $hitPoints=$hitPoints+$boostHitPoints;
+            $user->maximumHitPoints = $hitPoints;
+            $user->currentHitPoints = $hitPoints;
+            $user->experience = 0;
+            $user->spentExperience = 0;
+            $user->currentGold = 0;
+            $user->questGold = 0;
+            $user->questId = 0;
+            $user->questStep = 0; // Движение по лесу (1-10)
+            $user->maximumLevelQuest = 1;
+            $user->enemyId = 0;
+            $user->pvpScore = 0;
+
+            // Формируем оружие;
+            $data['item1']['level'] = 1;
+            $data['item1']['sellingPrice'] = 1;
+            $data['item1']['purchasePrice'] = 1;
+
+            // Формируем доспех;
+            $data['item2']['level'] = 1;
+            $data['item2']['sellingPrice'] = 1;
+            $data['item2']['purchasePrice'] = 1;
+
+            if ($class == 1)
+            {
+                $user->attackType = $class;
+                $user->currentSwordAttack = 1;
+                $user->currentSwordShield = 2;
+                $data['item1']['currentSwordAttack'] = 1;
+                $data['item2']['currentSwordShield'] = 2;
+
+
+                $sh_is=1;
+                $tip=1;
+                $name='Меч новичка';
+                $name1='Кольчуга новичка';
+            }
+
+            if ($class == 2)
+            {
+                $user->attackType = $class;
+                $at_b=1;
+                $sh_b=2;
+                $sh_ib=1;
+                $tip=2;
+                $name='Лук новичка';
+                $name1='Плащ новичка';
+            }
+
+            if ($class == 3)
+            {
+                $user->attackType = $class;
+                $at_m=1;
+                $sh_m=2;
+                $sh_im=1;
+                $tip=3;
+                $name='Посох новичка';
+                $name1='Роба новичка';
+            }
+
+            $data['user'] = $user;
+
+
+
+            $data['returnMessage'] = 'Регистрация успешна! Для входа в игру, введите логин и пароль на главной странице!<br><A HREF="/">Вернуться на главную страницу</A>';
+            $data['returnPage'] = 'redirect';
+            return $data;
+        }
+        else
+        // Если нужно вывести только страницу регистрации;
+        {
+            $data['returnPage'] = 'register';
+            return $data;
         }
 
     }
 
 
     // Проверка на наличие сессии у пользователя;
-    public function checkSession()
+    public static function checkSession()
     {
         // Проверяем наличие сессии;
         if (isset($_SESSION['userId']))

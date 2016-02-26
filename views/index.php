@@ -76,7 +76,7 @@
             </center>
 
             <hr>
-            <font size="2" face="Tahoma"><center><b><A HREF="/Users/register">Регистрация</A></b></center></font>
+            <font size="3" face="Tahoma"><center><b><A HREF="/Users/register">Регистрация</A></b></center></font>
 
 
         </div>

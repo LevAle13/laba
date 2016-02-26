@@ -112,13 +112,12 @@ class Users
         }
 
         //print_r($data);
-
     }
 
     // Извлечение данных для логина;
     public function readUserByLogin($login)
     {
-        $sql = xquery ("select * from users where login='". $login ."' LIMIT 1");
+        $sql = xquery ("select * from users where login=^S LIMIT 1", $login);
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         $result = $data[0];
 
@@ -185,17 +184,7 @@ class Users
         //echo '<br>SQL QUERY: '.$sqlText;
     }
 
-    // Загружаем выбранные поля;
-    public function loadFields($fields,$condition)
-    {
 
-    }
-
-    // Загружаем список скилов в массив $skillsArray();
-    public function loadSkills()
-    {
-
-    }
 
 }
 
