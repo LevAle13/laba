@@ -51,10 +51,18 @@ class Items
     );
 
 
-    // Получаем информацию о одетом оружии и его заточке по айди персонажа;
-    public function getEquipmentItem($userId)
+    // Получаем информацию о одетом ОРУЖИИ и его заточке по айди персонажа;
+    public function getEquipmentAttackItem($userId)
     {
         $sql = xquery ("select name,enhancement from items where userId='".$userId."' and equip='1' order by itemType");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return $data[0];
+    }
+
+    // Получаем информацию о одетом ДОСПЕХЕ и его заточке по айди персонажа;
+    public function getEquipmentShieldItem($userId)
+    {
+        $sql = xquery ("select name,enhancement from items where userId='".$userId."' and equip='1' and itemType = '4'");
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         return $data[0];
     }
@@ -79,7 +87,7 @@ class Items
 
         $sqlText=$sqlText1.$sqlText2;
 
-        //echo 'RESULT SQL: '.$sqlText1.$sqlText2.'<br>';
+        echo 'RESULT SQL: '.$sqlText1.$sqlText2.'<br>';
 
         $result = xquery($sqlText);
     }

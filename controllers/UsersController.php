@@ -144,7 +144,8 @@ class UsersController
 
             $data['returnPage'] = 'main';
             $data['user'] = $user;
-            $data['item'] = $item->getEquipmentItem($user->userId);
+            $data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
+            $data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
 
             return $data;
         }
@@ -255,8 +256,8 @@ class UsersController
                 $data['user']['currentSwordShield'] = 2;
                 $data['item1']['itemType'] = $class;
                 $data['item2']['itemType'] = 4;
-                $data['item1']['currentSwordAttack'] = 1;
-                $data['item2']['currentSwordShield'] = 1;
+                $data['item1']['SwordAttack'] = 1;
+                $data['item2']['SwordShield'] = 1;
                 $data['item1']['name'] = 'Меч новичка';
                 $data['item2']['name'] = 'Кольчуга новичка';
             }
@@ -268,8 +269,8 @@ class UsersController
                 $data['user']['currentBowShield'] = 2;
                 $data['item1']['itemType'] = $class;
                 $data['item2']['itemType'] = 4;
-                $data['item1']['currentBowAttack'] = 1;
-                $data['item2']['currentBowShield'] = 1;
+                $data['item1']['BowAttack'] = 1;
+                $data['item2']['BowShield'] = 1;
                 $data['item1']['name'] = 'Лук новичка';
                 $data['item2']['name'] = 'Плащ новичка';
             }
@@ -281,8 +282,8 @@ class UsersController
                 $data['user']['currentMagicShield'] = 2;
                 $data['item1']['itemType'] = $class;
                 $data['item2']['itemType'] = 4;
-                $data['item1']['currentMagicAttack'] = 1;
-                $data['item2']['currentMagicShield'] = 1;
+                $data['item1']['MagicAttack'] = 1;
+                $data['item2']['MagicShield'] = 1;
                 $data['item1']['name'] = 'Посох новичка';
                 $data['item2']['name'] = 'Роба новичка';
             }
@@ -297,6 +298,32 @@ class UsersController
             $item = new Items();
             $item->newItem($data['item1']);
             $item->newItem($data['item2']);
+
+            include '/models/Skills.php';
+            $skill = new Skills();
+
+            // Скил на ношение оружия;
+            $data['skill']['userId'] =$user->userId;
+            $data['skill']['skillId'] =$user->attackType+6;
+            $data['skill']['skillLevel'] =1;
+            $skill->newSkill($data['skill']);
+
+            // Скил на ношение доспеха;
+            $data['skill']['skillId'] =$user->attackType+6+3;
+            $skill->newSkill($data['skill']);
+
+            // Скил на атаку;
+            $data['skill']['skillId'] =$user->attackType;
+            $skill->newSkill($data['skill']);
+
+            // Скил на защиту;
+            $data['skill']['skillId'] =$user->attackType+3;
+            $skill->newSkill($data['skill']);
+
+
+
+
+
 
             //echo 'UserId: '.$user->userId;
 
