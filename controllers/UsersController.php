@@ -202,86 +202,103 @@ class UsersController
             $password=md5($password1);
             $registerTime=time();
 
-            $user->login = $login;
-            $user->password = $password;
-            $user->registrationIp = $_SERVER['REMOTE_ADDR'];
-            $user->lastLoginIp = $_SERVER['REMOTE_ADDR'];
-            $user->registerTime = $registerTime;
-            $user->failPassTry = 0;
+            $data['user']['login'] = $login;
+            $data['user']['password'] = $password;
+            $data['user']['registrationIp'] = $_SERVER['REMOTE_ADDR'];
+            $data['user']['lastLoginIp'] = $_SERVER['REMOTE_ADDR'];
+            $data['user']['registerTime'] = $registerTime;
+            $data['user']['failPassTry'] = 0;
 
-            $user->currentSwordAttack = 0;
-            $user->currentBowAttack = 0;
-            $user->currentMagicAttack = 0;
-            $user->currentSwordShield = 0;
-            $user->currentBowShield = 0;
-            $user->currentMagicShield = 0;
-            $user->minimumDamage = 1;
-            $user->maximumDamage = 3;
+            $data['user']['currentSwordAttack'] = 0;
+            $data['user']['currentBowAttack'] = 0;
+            $data['user']['currentMagicAttack'] = 0;
+            $data['user']['currentSwordShield'] = 0;
+            $data['user']['currentBowShield'] = 0;
+            $data['user']['currentMagicShield'] = 0;
+            $data['user']['minimumDamage'] = 1;
+            $data['user']['maximumDamage'] = 3;
             $hitPoints=10;
             //Буст робы
             $boostHitPoints=1;
             $hitPoints=$hitPoints+$boostHitPoints;
-            $user->maximumHitPoints = $hitPoints;
-            $user->currentHitPoints = $hitPoints;
-            $user->experience = 0;
-            $user->spentExperience = 0;
-            $user->currentGold = 0;
-            $user->questGold = 0;
-            $user->questId = 0;
-            $user->questStep = 0; // Движение по лесу (1-10)
-            $user->maximumLevelQuest = 1;
-            $user->enemyId = 0;
-            $user->pvpScore = 0;
+            $data['user']['maximumHitPoints'] = $hitPoints;
+            $data['user']['currentHitPoints'] = $hitPoints;
+            $data['user']['experience'] = 0;
+            $data['user']['spentExperience'] = 0;
+            $data['user']['currentGold'] = 0;
+            $data['user']['questGold'] = 0;
+            $data['user']['questId'] = 0;
+            $data['user']['questStep'] = 0; // Движение по лесу (1-10)
+            $data['user']['maximumLevelQuest'] = 1;
+            $data['user']['enemyId'] = 0;
+            $data['user']['pvpScore'] = 0;
 
             // Формируем оружие;
             $data['item1']['level'] = 1;
             $data['item1']['sellingPrice'] = 1;
             $data['item1']['purchasePrice'] = 1;
+            $data['item1']['minimumDamage'] = 1;
+            $data['item1']['maximumDamage'] = 3;
+            $data['item1']['equip'] = 1;
 
             // Формируем доспех;
             $data['item2']['level'] = 1;
             $data['item2']['sellingPrice'] = 1;
             $data['item2']['purchasePrice'] = 1;
+            $data['item2']['hitPoints'] = $boostHitPoints;
+            $data['item2']['equip'] = 1;
 
             if ($class == 1)
             {
-                $user->attackType = $class;
-                $user->currentSwordAttack = 1;
-                $user->currentSwordShield = 2;
+                $data['user']['attackType'] = $class;
+                $data['user']['currentSwordAttack'] = 1;
+                $data['user']['currentSwordShield'] = 2;
+                $data['item1']['itemType'] = $class;
+                $data['item2']['itemType'] = 4;
                 $data['item1']['currentSwordAttack'] = 1;
-                $data['item2']['currentSwordShield'] = 2;
-
-
-                $sh_is=1;
-                $tip=1;
-                $name='Меч новичка';
-                $name1='Кольчуга новичка';
+                $data['item2']['currentSwordShield'] = 1;
+                $data['item1']['name'] = 'Меч новичка';
+                $data['item2']['name'] = 'Кольчуга новичка';
             }
 
             if ($class == 2)
             {
-                $user->attackType = $class;
-                $at_b=1;
-                $sh_b=2;
-                $sh_ib=1;
-                $tip=2;
-                $name='Лук новичка';
-                $name1='Плащ новичка';
+                $data['user']['attackType'] = $class;
+                $data['user']['currentBowAttack'] = 1;
+                $data['user']['currentBowShield'] = 2;
+                $data['item1']['itemType'] = $class;
+                $data['item2']['itemType'] = 4;
+                $data['item1']['currentBowAttack'] = 1;
+                $data['item2']['currentBowShield'] = 1;
+                $data['item1']['name'] = 'Лук новичка';
+                $data['item2']['name'] = 'Плащ новичка';
             }
 
             if ($class == 3)
             {
-                $user->attackType = $class;
-                $at_m=1;
-                $sh_m=2;
-                $sh_im=1;
-                $tip=3;
-                $name='Посох новичка';
-                $name1='Роба новичка';
+                $data['user']['attackType'] = $class;
+                $data['user']['currentMagicAttack'] = 1;
+                $data['user']['currentMagicShield'] = 2;
+                $data['item1']['itemType'] = $class;
+                $data['item2']['itemType'] = 4;
+                $data['item1']['currentMagicAttack'] = 1;
+                $data['item2']['currentMagicShield'] = 1;
+                $data['item1']['name'] = 'Посох новичка';
+                $data['item2']['name'] = 'Роба новичка';
             }
 
-            $data['user'] = $user;
+            $user->newUser($data['user']);
+            $user->readUserByLogin($login);
 
+            $data['item1']['userId'] = $user->userId;
+            $data['item2']['userId'] = $user->userId;
+
+            include '/models/Items.php';
+            $item = new Items();
+            $item->newItem($data['item1']);
+            $item->newItem($data['item2']);
+
+            //echo 'UserId: '.$user->userId;
 
 
             $data['returnMessage'] = 'Регистрация успешна! Для входа в игру, введите логин и пароль на главной странице!<br><A HREF="/">Вернуться на главную страницу</A>';

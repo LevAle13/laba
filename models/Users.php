@@ -43,9 +43,6 @@ class Users
     public $pvpScore;
     public $def; // Не помню зачем это нужно
 
-    // Системные поля
-    public $loginAction = false;
-
     // Все данные представленные в массиве;
     public $arrayStats = array(
         'userId' => "",
@@ -182,6 +179,31 @@ class Users
 
         //echo 'Результат запроса: '.$result;
         //echo '<br>SQL QUERY: '.$sqlText;
+    }
+
+    // Новый пользователь
+    public function newUser($fields)
+    {
+
+        $sqlText1 = 'INSERT INTO users (';
+        $sqlText2 = ' VALUES (';
+        foreach($fields as $key => $value)
+        {
+            $sqlText1 = $sqlText1 . $key . ', ';
+            $sqlText2 = $sqlText2 .'"'. $value . '", ';
+        }
+
+        $sqlText1 = substr($sqlText1, 0, -2);
+        $sqlText2 = substr($sqlText2, 0, -2);
+
+        $sqlText1 = $sqlText1.') ';
+        $sqlText2 = $sqlText2.')';
+
+        $sqlText=$sqlText1.$sqlText2;
+
+        //echo 'RESULT SQL: '.$sqlText1.$sqlText2;
+
+        $result = xquery($sqlText);
     }
 
 
