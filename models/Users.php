@@ -206,6 +206,15 @@ class Users
         $result = xquery($sqlText);
     }
 
+    // Считываем весь список пользователей;
+    public function listUsers()
+    {
+        $sql = xquery ("select * from users where spentExperience>'0' order by spentExperience DESC");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+
+        return $data;
+    }
+
 
 
 }

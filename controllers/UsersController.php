@@ -6,6 +6,8 @@
  * Time: 12:32
  */
 
+include '/models/Users.php';
+
 class UsersController
 {
 
@@ -27,8 +29,6 @@ class UsersController
     // ЛОГИН;
     public function loginAction($requestData)
     {
-        // Подключаем модель Users
-        include '/models/Users.php';
         //
         $login = htmlspecialchars($requestData['login']);
         $password = htmlspecialchars($requestData['password']);
@@ -124,8 +124,6 @@ class UsersController
     // Основной игровой экран;
     public function mainAction($requestData)
     {
-        include '/models/Users.php';
-
         //$data = $this->checkSession();
         $data = $this::checkSession();
 
@@ -141,7 +139,6 @@ class UsersController
             include '/models/Items.php';
             $item = new Items();
 
-
             $data['returnPage'] = 'main';
             $data['user'] = $user;
             $data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
@@ -149,6 +146,29 @@ class UsersController
 
             return $data;
         }
+    }
+
+    public function ratingAction()
+    {
+        $data = $this::checkSession();
+        if ($data['sessionCheck'] == true)
+        {
+            $user = new Users();
+            $data['users']=$user->listUsers();
+
+            $user->readUserById($_SESSION['userId']);
+
+            include '/models/Items.php';
+            $item = new Items();
+
+            $data['returnPage'] = 'rating';
+            $data['user'] = $user;
+            $data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
+            $data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
+
+            return $data;
+        }
+
     }
 
     public function registerAction($requestData)
@@ -190,7 +210,6 @@ class UsersController
             }
 
             // Проверяем наличие подобного логина в базе;
-            include '/models/Users.php';
             $user = new Users();
             if (($user->readUserByLogin($login)) == true)
             {
@@ -320,14 +339,7 @@ class UsersController
             $data['skill']['skillId'] =$user->attackType+3;
             $skill->newSkill($data['skill']);
 
-
-
-
-
-
             //echo 'UserId: '.$user->userId;
-
-
             $data['returnMessage'] = 'Регистрация успешна! Для входа в игру, введите логин и пароль на главной странице!<br><A HREF="/">Вернуться на главную страницу</A>';
             $data['returnPage'] = 'redirect';
             return $data;

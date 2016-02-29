@@ -113,8 +113,8 @@ $itemShield=$viewsData['itemShield']['name'].$itemBonus;
                          <A HREF='/Users/skills'>Умения</A><br><br>
                          <A HREF='/Items/itemShop'>Магазин оружия и доспехов</A><br><br>
                          <A HREF='/Items/potionShop'>Магазин Эликсиров</A><br><br>
-                         <A HREF='/Users/reiting'>Рейтинг игроков</A><br><br>
-                         <A HREF='/Users/reitingPvp'>PVP Рейтинг</A><br>
+                         <A HREF='/Users/rating'>Рейтинг игроков</A><br><br>
+                         <A HREF='/Users/ratingPvp'>PVP Рейтинг</A><br>
                      </div>
                  </div>
 
