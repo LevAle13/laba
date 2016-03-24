@@ -19,6 +19,29 @@ class Parser
 		print_r ($this->filearray);
 	}
 	
+	public function MyPars2()
+	{
+		$text = '';
+		foreach($this->filearray as $key => $value) {
+		$text=$text.$value;
+		}
+
+		preg_match_all('/(.*)\n(.*)\n((.+(\n|$))*)(\n|$)/',$text,$result,PREG_OFFSET_CAPTURE);
+
+		//$result=$result[0][0];
+
+		print_r($result);
+
+
+		foreach($result as $key => $value)
+		{
+		//	$this->parserresult = 'KEY: '.$key.'<br>'.$this->parserresult.'<br>'.$value;
+		}
+
+		//$text = print_r($this->filearray);
+		//$this->parserresult = print_r($result);
+	}
+
 	public function myPars()
 	{
 		$text='';
@@ -73,6 +96,30 @@ class Parser
 	{
 		echo $this->parserresult;
 	}
+
+	public function printFormatHeader()
+	{
+		echo '
+
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Проект Гринд</title>
+		<link href="/css/bootstrap.css" rel="stylesheet">
+
+
+		</head>
+		<body>
+		';
+
+		echo $this->parserresult;
+
+		echo '</body></html>';
+	}
 	
 	public function echoCount()
 	{
@@ -84,8 +131,9 @@ class Parser
 
 $ParserResult = new Parser("log.txt"); 
 
-$ParserResult->myPars();
-$ParserResult->printFormat();
+$ParserResult->myPars2();
+//$ParserResult->printFormat();
+$ParserResult->printFormatHeader();
 
 //$ParserResult->echoCount();
 
