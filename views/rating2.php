@@ -116,9 +116,9 @@ $itemShield=$viewsData['itemShield']['name'].$itemBonus;
                     echo "<tr class='warning'>
                     <td style='padding: 3px;' ALIGN='center' width='5%' bgcolor='white'>№</td>
                     <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Имя игрока</td>
-                    <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Опыт игрока</td>
                     <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>ПвП Рейтинг</td>
-                    <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Дата входа в игру</td>
+                    <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Лес</td>
+                    <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Опыт игрока</td>
                     <td style='padding: 3px;' ALIGN='center' width='20%' bgcolor='white'>Сражение</td>
                     </tr>
                     ";
@@ -134,9 +134,9 @@ $itemShield=$viewsData['itemShield']['name'].$itemBonus;
                         <tr >
                         <td style='padding: 2px;' ALIGN='center' width='5%' bgcolor='white'>".$k."</td>
                         <td style='padding: 2px;' width='20%' bgcolor='white'>".($ingr['login'])."</td>
+		                <td style='padding: 2px;' width='20%' ALIGN='center' bgcolor='white'>".($ingr['pvpScore'])."</td>
+		                <td style='padding: 2px;' width='20%' ALIGN='center'  bgcolor='white'>".($ingr['maximumLevelQuest'])."</td>
 		                <td style='padding: 2px;' width='20%' ALIGN='center' bgcolor='white'>".($ingr['spentExperience'])."</td>
-		                <td style='padding: 2px;' width='20%' ALIGN='center'  bgcolor='white'>".($ingr['pvpScore'])."</td>
-		                <td style='padding: 2px;' width='20%' ALIGN='center' bgcolor='white'>".date("d.m.Y  H:i:s", ($ingr['lastLoginTime']))."</td>
 		                <td style='padding: 2px;' ALIGN='center' width='20%' bgcolor='white'>".$buk."</td>
 		                </tr>";
 

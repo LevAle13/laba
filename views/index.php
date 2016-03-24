@@ -5,6 +5,7 @@
  * Date: 10.02.2016
  * Time: 20:10
  */
+header("Content-Type: text/html; charset=utf-8");
 
 ?>
 

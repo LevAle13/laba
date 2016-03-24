@@ -6,6 +6,8 @@
  * Time: 20:04
  */
 
+header("Content-Type: text/html; charset=utf-8");
+
 
 // Процент жизни.
 $hp_proc=(int)((($viewsData['user']->currentHitPoints)*100)/($viewsData['user']->maximumHitPoints));

@@ -20,6 +20,8 @@ class UsersController
     public $heroInfo;
     public $itemData;
     public $enemyData;
+    // Данные для возврата;
+    public $data;
 
     // Конструктор.
     public function __construct()
@@ -124,49 +126,43 @@ class UsersController
     // Основной игровой экран;
     public function mainAction($requestData)
     {
-        $data = $this::checkSession();
-        if ($data['sessionCheck'] == true)
+        $this->checkSession();
+        if ($this->data['sessionCheck'] == true)
         {
-            $user = new Users();
-            $user->readUserById($_SESSION['userId']);
-
-
-            $data['returnPage'] = 'main';
-            //$this->heroInfo = $user;
-
-            include '/models/Items.php';
-            $item = new Items();
-
-            $data['returnPage'] = 'main';
-            $data['user'] = $user;
-            $data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
-            $data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
-
-            return $data;
+            $this->readUser();
+            $this->data['returnPage'] = 'main';
         }
+        return $this->data;
     }
 
+    // Экран рейтинга 1;
     public function ratingAction()
     {
-        $data = $this::checkSession();
-        if ($data['sessionCheck'] == true)
+        $this->checkSession();
+        if ($this->data['sessionCheck'] == true)
         {
+            $this->readUser();
+
             $user = new Users();
-            $data['users']=$user->listUsers();
-
-            $user->readUserById($_SESSION['userId']);
-
-            include '/models/Items.php';
-            $item = new Items();
-
-            $data['returnPage'] = 'rating';
-            $data['user'] = $user;
-            $data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
-            $data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
-
-            return $data;
+            $this->data['users']=$user->listUsers();
+            $this->data['returnPage'] = 'rating';
         }
+        return $this->data;
+    }
 
+    // Экран рейтинга 2;
+    public function ratingPvpAction()
+    {
+        $this->checkSession();
+        if ($this->data['sessionCheck'] == true)
+        {
+            $this->readUser();
+
+            $user = new Users();
+            $this->data['users']=$user->listUsersbyPvp();
+            $this->data['returnPage'] = 'rating2';
+        }
+        return $this->data;
     }
 
     public function registerAction($requestData)
@@ -353,22 +349,31 @@ class UsersController
 
 
     // Проверка на наличие сессии у пользователя;
-    public static function checkSession()
+    public function checkSession()
     {
         // Проверяем наличие сессии;
         if (isset($_SESSION['userId']))
         {
-            $data['sessionCheck'] = true;
-            return $data;
+            $this->data['sessionCheck'] = true;
         }
         else
         {
             // Если сессия не найдена - выкидываем на центральную страничку;
-            $data['returnPage'] = 'redirect';
-            $data['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
-            $data['sessionCheck'] = false;
-            return $data;
+            $this->data['returnPage'] = 'redirect';
+            $this->data['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
+            $this->data['sessionCheck'] = false;
         }
+    }
+
+    public function readUser()
+    {
+        $user = new Users();
+        $user->readUserById($_SESSION['userId']);
+        include '/models/Items.php';
+        $item = new Items();
+        $this->data['user'] = $user;
+        $this->data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);
+        $this->data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
     }
 
 

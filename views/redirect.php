@@ -6,6 +6,8 @@
  * Time: 17:48
  */
 
+header("Content-Type: text/html; charset=utf-8");
+
 ?>
 
     <!DOCTYPE html>

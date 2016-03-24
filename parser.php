@@ -19,6 +19,8 @@ class Parser
 		print_r ($this->filearray);
 	}
 	
+
+	// Парсинг посредством regex - не работает;
 	public function MyPars2()
 	{
 		$text = '';
@@ -26,9 +28,9 @@ class Parser
 		$text=$text.$value;
 		}
 
-		preg_match_all('/(.*)\n(.*)\n((.+(\n|$))*)(\n|$)/',$text,$result,PREG_OFFSET_CAPTURE);
+		preg_match_all('/(.*)\n(.*)\n((.+(\n|$))*)(\n\n|$)/',$text,$result,PREG_OFFSET_CAPTURE);
 
-		//$result=$result[0][0];
+		$result=$result[0][0];
 
 		print_r($result);
 
@@ -97,6 +99,7 @@ class Parser
 		echo $this->parserresult;
 	}
 
+	// Для нормального вывода вне титульной страницы;
 	public function printFormatHeader()
 	{
 		echo '
@@ -131,9 +134,9 @@ class Parser
 
 $ParserResult = new Parser("log.txt"); 
 
-$ParserResult->myPars2();
+$ParserResult->myPars();
 //$ParserResult->printFormat();
-$ParserResult->printFormatHeader();
+$ParserResult->printFormat();
 
 //$ParserResult->echoCount();
 

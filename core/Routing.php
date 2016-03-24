@@ -34,11 +34,11 @@ class Routing
             }
         }
 
-        // Вызываем вьюху;
+
         //echo " <br> Return page:".$this->data['returnPage']." <br> ";
 
+        //Вызываем вьюху;
         $viewsData = $this->data;
-
         //print_r($viewsData);
         include '/views/'.$this->data['returnPage'].'.php';
     }
@@ -114,9 +114,9 @@ class Routing
             $actionBegin = $this->action;
 
             $this->data = $newAction->$actionBegin($this->requestData);
-            if (isset($newAction->heroInfo)) $this->heroInfo = $newAction->heroInfo;
-            if (isset($newAction->itemData)) $this->itemData = $newAction->itemData;
-            if (isset($newAction->enemyData)) $this->enemyData = $newAction->enemyData;
+            //if (isset($newAction->heroInfo)) $this->heroInfo = $newAction->heroInfo;
+            //if (isset($newAction->itemData)) $this->itemData = $newAction->itemData;
+            //if (isset($newAction->enemyData)) $this->enemyData = $newAction->enemyData;
 
             //echo "Return page: ".$this->data['returnPage']." <br>";
             //echo "RESULT JE: <br>";

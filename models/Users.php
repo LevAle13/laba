@@ -215,6 +215,15 @@ class Users
         return $data;
     }
 
+    // Считываем весь список пользователей;
+    public function listUsersbyPvp()
+    {
+        $sql = xquery ("select * from users where spentExperience>'0' order by pvpScore DESC");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+
+        return $data;
+    }
+
 
 
 }

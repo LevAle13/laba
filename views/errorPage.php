@@ -6,6 +6,7 @@
  * Time: 17:59
  */
 header("HTTP/1.0 404 Not Found");
+header("Content-Type: text/html; charset=utf-8");
 ?>
 
 <!DOCTYPE html>
