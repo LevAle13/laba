@@ -124,9 +124,7 @@ class UsersController
     // Основной игровой экран;
     public function mainAction($requestData)
     {
-        //$data = $this->checkSession();
         $data = $this::checkSession();
-
         if ($data['sessionCheck'] == true)
         {
             $user = new Users();
