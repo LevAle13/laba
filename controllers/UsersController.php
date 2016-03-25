@@ -11,19 +11,10 @@ include '/models/Users.php';
 class UsersController
 {
 
-    public $arrayResult = array(
-        'returnPage' => "",
-        'returnMessage' => "",
-        'errorMessage' => "",
-    );
-
-    public $heroInfo;
-    public $itemData;
-    public $enemyData;
     // Данные для возврата;
     public $data;
 
-    // Конструктор.
+    // Конструктор; ПУСТОЙ
     public function __construct()
     {
     }
@@ -124,7 +115,7 @@ class UsersController
     }
 
     // Основной игровой экран;
-    public function mainAction($requestData)
+    public function mainAction()
     {
         $this->checkSession();
         if ($this->data['sessionCheck'] == true)
@@ -165,6 +156,7 @@ class UsersController
         return $this->data;
     }
 
+    // Регистрация пользователя;
     public function registerAction($requestData)
     {
         $login = htmlspecialchars($requestData['login']);
@@ -347,7 +339,6 @@ class UsersController
 
     }
 
-
     // Проверка на наличие сессии у пользователя;
     public function checkSession()
     {
@@ -377,7 +368,7 @@ class UsersController
     }
 
 
-    // Выводим информацию по персонажу и его инвентарю.
+    // Выводим информацию по персонажу и его инвентарю; НЕ ИСПОЛЬЗУЕТСЯ
     public function userInfo($userId)
     {
         $user = new Users();

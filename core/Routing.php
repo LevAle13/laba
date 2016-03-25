@@ -34,11 +34,11 @@ class Routing
             }
         }
 
-
         //echo " <br> Return page:".$this->data['returnPage']." <br> ";
 
         //Вызываем вьюху;
         $viewsData = $this->data;
+
         //print_r($viewsData);
         include '/views/'.$this->data['returnPage'].'.php';
     }
