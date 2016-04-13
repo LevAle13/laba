@@ -23,11 +23,9 @@ class Routing
     {
         // Нужен код для проверки пользовательских данных;
         $this->requestData = $requestData;
-        $this->parseUrl($_SERVER['REQUEST_URI']);
-
-        if ($this->data['resultParse'] == true)
+        // Вызываем метод, который парсит строку;
+        if ($this->parseUrl($_SERVER['REQUEST_URI']) == true)
         {
-
             if ($this->loadClass() == true)
             {
                 $this->actionController();
@@ -35,7 +33,6 @@ class Routing
         }
 
         //echo " <br> Return page:".$this->data['returnPage']." <br> ";
-
         //Вызываем вьюху;
         $viewsData = $this->data;
 
@@ -46,48 +43,34 @@ class Routing
     // Парсим адресную строку;
     public function parseUrl ($url)
     {
-
         $this->parse = explode("/", trim($url, "/"));
 
         $this->controller = $this->parse['0'].'Controller';
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
-        $this->data['resultParse'] = true;
+        // Проверка на пустой контроллер;
+        if ($this->controller == 'Controller')
+        {
+            $this->data['returnPage'] = 'index';
+            return false;
+        }
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))
         {
-            $this->data['resultParse'] = false;
             $this->data['returnPage'] = 'errorPage';
             $this->data['errorMessage'] = 'Action is empty!';
+            return false;
         }
 
-        // Проверка на пустой контроллер;
-        if ($this->controller == 'Controller')
-        {
-            $this->data['resultParse'] = false;
-            $this->data['returnPage'] = 'index';
-        }
-
-    }
-
-    // Вывод на экран; Вспомогательный метод для отслеживания передаваемых данных;
-    public function printParse()
-    {
-        print_r ($this->parse);
-        echo '<br><br>Controller: '.$this->controller;
-        echo '<br><br>Action: '.$this->action;
-        echo '<br><br>Value: '.$this->parseValue;
-        echo '<br><br>Login: '.$this->requestData['login'];
-        echo '<br><br>Password: '.$this->requestData['password'];
+        return true;
     }
 
     // Подгружаем необходимые классы для основного метода, на основе массива;
     public function loadClass()
     {
         $filename = 'controllers/'.$this->controller.'.php';
-
 
         if (file_exists($filename))
         {
@@ -96,7 +79,6 @@ class Routing
         }
         else
         {
-            $this->data['resultParse'] = false;
             $this->data['returnPage'] = 'errorPage';
             $this->data['errorMessage'] = 'Controller file: '.$filename.' is absent!';
             return false;
@@ -112,18 +94,10 @@ class Routing
         if (method_exists($newAction,$this->action) == true)
         {
             $actionBegin = $this->action;
-
             $this->data = $newAction->$actionBegin($this->requestData);
-            //if (isset($newAction->heroInfo)) $this->heroInfo = $newAction->heroInfo;
-            //if (isset($newAction->itemData)) $this->itemData = $newAction->itemData;
-            //if (isset($newAction->enemyData)) $this->enemyData = $newAction->enemyData;
-
             //echo "Return page: ".$this->data['returnPage']." <br>";
             //echo "RESULT JE: <br>";
             //print_r($this->data);
-
-            //$this->data['returnPage'] = $newAction->arrayResult['returnPage'];
-            //$this->data['returnMessage'] = $newAction->arrayResult['returnMessage'];
         }
         else
         {

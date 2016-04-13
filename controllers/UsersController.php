@@ -19,7 +19,7 @@ class UsersController
     {
     }
 
-    // ЛОГИН;
+    // Логин;
     public function loginAction($requestData)
     {
         //
