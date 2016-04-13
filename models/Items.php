@@ -87,7 +87,7 @@ class Items
 
         $sqlText=$sqlText1.$sqlText2;
 
-        echo 'RESULT SQL: '.$sqlText1.$sqlText2.'<br>';
+        //echo 'RESULT SQL: '.$sqlText1.$sqlText2.'<br>';
 
         $result = xquery($sqlText);
     }

@@ -5,7 +5,7 @@
  * Date: 02.02.2016
  * Time: 22:53
  */
-
+header("Content-Type: text/html; charset=utf-8");
 $check = 1;
 //header('Location: http://178.150.197.121/');
 include "config.php";

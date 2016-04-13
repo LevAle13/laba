@@ -6,7 +6,6 @@
  * Time: 20:04
  */
 
-header("Content-Type: text/html; charset=utf-8");
 
 ?>
 
@@ -39,8 +38,8 @@ header("Content-Type: text/html; charset=utf-8");
                      <div style="font-family: Tahoma; font-size: 14pt; font-weight:bold; color: blue; ">
                          <br>
                          <A HREF='/Users/questSelect'>Начать приключение</A><br><br>
-                         <A HREF='/Items/invent'>Инвентарь</A>
-                         &nbsp;<A HREF='/Items/invent2'>+</A><br><br>
+                         <A HREF='/Users/inventory'>Инвентарь</A>
+                         &nbsp;<A HREF='/Users/inventory2'>+</A><br><br>
                          <A HREF='/Users/skills'>Умения</A><br><br>
                          <A HREF='/Items/itemShop'>Магазин оружия и доспехов</A><br><br>
                          <A HREF='/Items/potionShop'>Магазин Эликсиров</A><br><br>

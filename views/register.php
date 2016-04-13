@@ -6,7 +6,6 @@
  * Time: 20:01
  */
 
-header("Content-Type: text/html; charset=utf-8");
 
 ?>
 

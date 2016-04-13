@@ -26,18 +26,44 @@ class Routing
         // Вызываем метод, который парсит строку;
         if ($this->parseUrl($_SERVER['REQUEST_URI']) == true)
         {
-            if ($this->loadClass() == true)
+            // Фильтр сессии;
+            include '/filters/sessionFilter.php';
+            // Только если это не логин или регистрация;
+            if (($this->action <> 'loginAction') and ($this->action <> 'registerAction'))
+            {
+                if (isset($_SESSION['userId']))
+                {
+                    $this->data['sessionCheck'] = true;
+                }
+                else
+                {
+                    // Если сессия не найдена - выкидываем на центральную страничку;
+                    $this->data['returnPage'] = 'redirect';
+                    $this->data['returnMessage'] = 'Время Вашей сессии истекло! <br><A HREF="/">Вернуться на центральную страницу</A>';
+                    $this->data['sessionCheck'] = false;
+                }
+            }
+            else
+            {
+                $this->data['sessionCheck'] = true;
+            }
+
+            if (($this->loadClass() == true) and ($this->data['sessionCheck'] == true) )
             {
                 $this->actionController();
             }
         }
 
-        //echo " <br> Return page:".$this->data['returnPage']." <br> ";
-        //Вызываем вьюху;
-        $viewsData = $this->data; $viewsData = $this->data;
 
-        //print_r($viewsData);
-        include '/views/'.$this->data['returnPage'].'.php';
+        $viewFile = 'views/'.$this->data['returnPage'].'.php';
+        if (file_exists($viewFile) == false)
+        {
+            $this->data['returnPage'] = 'errorPage';
+            $this->data['errorMessage'] = 'View file "'.$viewFile.'" is absent!';
+        }
+        //Вызываем вьюху;
+        $viewsData = $this->data;
+        include 'views/' . $this->data['returnPage'] . '.php';
     }
 
     // Парсим адресную строку;

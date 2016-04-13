@@ -6,7 +6,6 @@
  * Time: 1:55
  */
 
-header("Content-Type: text/html; charset=utf-8");
 ?>
 
 <!DOCTYPE html>

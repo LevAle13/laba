@@ -5,8 +5,7 @@
  * Date: 17.02.2016
  * Time: 17:59
  */
-header("HTTP/1.0 404 Not Found");
-header("Content-Type: text/html; charset=utf-8");
+//header("HTTP/1.0 404 Not Found");
 ?>
 
 <!DOCTYPE html>

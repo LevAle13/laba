@@ -117,42 +117,29 @@ class UsersController
     // Основной игровой экран;
     public function mainAction()
     {
-        $this->checkSession();
-        if ($this->data['sessionCheck'] == true)
-        {
-            $this->readUser();
-            $this->data['returnPage'] = 'main';
-        }
+        $this->readUser();
+        $this->data['returnPage'] = 'main';
         return $this->data;
     }
 
     // Экран рейтинга 1;
     public function ratingAction()
     {
-        $this->checkSession();
-        if ($this->data['sessionCheck'] == true)
-        {
-            $this->readUser();
-
-            $user = new Users();
-            $this->data['users']=$user->listUsers();
-            $this->data['returnPage'] = 'rating';
-        }
+        $this->readUser();
+        $user = new Users();
+        $this->data['users']=$user->listUsers();
+        $this->data['returnPage'] = 'rating';
         return $this->data;
     }
 
     // Экран рейтинга 2;
     public function ratingPvpAction()
     {
-        $this->checkSession();
-        if ($this->data['sessionCheck'] == true)
-        {
-            $this->readUser();
+        $this->readUser();
+        $user = new Users();
+        $this->data['users']=$user->listUsersbyPvp();
+        $this->data['returnPage'] = 'rating2';
 
-            $user = new Users();
-            $this->data['users']=$user->listUsersbyPvp();
-            $this->data['returnPage'] = 'rating2';
-        }
         return $this->data;
     }
 
@@ -339,7 +326,7 @@ class UsersController
 
     }
 
-    // Проверка на наличие сессии у пользователя;
+    // Проверка на наличие сессии у пользователя; УПРАЗДНЕНО - УДАЛИТЬ
     public function checkSession()
     {
         // Проверяем наличие сессии;
@@ -367,16 +354,13 @@ class UsersController
         $this->data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
     }
 
-
-    // Выводим информацию по персонажу и его инвентарю; НЕ ИСПОЛЬЗУЕТСЯ
-    public function userInfo($userId)
+    public function inventoryAction()
     {
-        $user = new Users();
-        $user->readUser($userId);
-        // ...Вызов класса рендеринга страницы...
-        // ----
-        // ----
-        return ($user);
+        $this->readUser();
+
+        $this->data['returnPage'] = 'inventory';
+        return $this->data;
+
     }
 
     // Добавление опыта.
