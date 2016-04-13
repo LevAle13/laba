@@ -53,7 +53,7 @@ class Routing
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
 
-        $this->data['resultParse'] = true; 
+        $this->data['resultParse'] = true;
 
         // Проверка на пустой Экшен;
         if (empty($this->parse['1']))

@@ -51,7 +51,7 @@ class Items
     );
 
 
-    // Получаем информацию о одетом ОРУЖИИ и его заточке по айди персонажа;
+    // Получаем информацию об одетом ОРУЖИИ и его заточке по айди персонажа;
     public function getEquipmentAttackItem($userId)
     {
         $sql = xquery ("select name,enhancement from items where userId='".$userId."' and equip='1' order by itemType");
