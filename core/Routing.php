@@ -59,7 +59,7 @@ class Routing
         if (file_exists($viewFile) == false)
         {
             $this->data['returnPage'] = 'errorPage';
-            $this->data['errorMessage'] = 'View file "'.$viewFile.'" is absent!';
+            $this->data['errorMessage'] = "View file '".$viewFile."' doesn't exist!";
         }
         //Вызываем вьюху;
         $viewsData = $this->data;

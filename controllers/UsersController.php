@@ -369,11 +369,20 @@ class UsersController
         {
 
             $this->data['returnPage'] = 'inventory';
+            // Продаем предмет;
+            if ($requestData['parseValue1']=='sell')
+            {
+
+            }
+            // Одеваем предмет;
+            if ($requestData['parseValue1']=='use')
+            {
+
+            }
         }
 
 
         return $this->data;
-
     }
 
     // Добавление опыта.
