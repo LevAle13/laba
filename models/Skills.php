@@ -36,4 +36,11 @@ class Skills
 
         $result = xquery($sqlText);
     }
+
+    public function readSkillValue($userId,$skillId)
+    {
+        $sql = xquery ("select * from skills where userId='".$userId."' and skillId='".$skillId."'");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return ($data[0]);
+    }
 }

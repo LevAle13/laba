@@ -14,6 +14,9 @@ class itemsController
     //
     public function inventoryAction($requestData)
     {
+        // Используем модель Items;
+        include_once '/models/Items.php';
+        $item = new Items();
         // Вызываем контроллер пользователя для получения данных;
         include "/controllers/UsersController.php";
         $myUser = new UsersController();
@@ -29,9 +32,13 @@ class itemsController
         else
         {
 
+            // Любые действия над предметом проходят проверку на наличие предмета;
+            if ($requestData['parseValue2']<>'')
+            {
+                $this->data['item'] = $item->readById($requestData['parseValue2']);
+            }
 
 
-            $this->data['returnPage'] = 'inventory';
             // Продаем предмет;
             if ($requestData['parseValue1']=='sell')
             {
@@ -42,6 +49,17 @@ class itemsController
             {
 
             }
+
+            // Все предметы;
+            $this->data['items'] = $item->readAllItemsByUserId($_SESSION['userId']);
+            // Количество предметов;
+            $this->data['itemsCount'] = $item->itemsCount($_SESSION['userId']);
+            // Уровень скила отвечающий за количество одетых предметов;
+            include_once '/models/Skills.php';
+            $mySkill = new Skills();
+            $this->data['skillWear'] = $mySkill->readSkillValue($_SESSION['userId'], 18);
+
+            $this->data['returnPage'] = 'inventory';
         }
 
 

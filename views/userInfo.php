@@ -25,7 +25,7 @@ switch ($viewsData['user']->attackType) {
         $attackStats = 'Физ атака: '.$viewsData['user']->currentSwordAttack;
         break;
     case 2:
-        $attackType = 'Лучник (атакует луком!!!)';
+        $attackType = 'Лучник (атакует луком)';
         $attackStats = 'Физ атака: '.$viewsData['user']->currentBowAttack;
         break;
     case 3:

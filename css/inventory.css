@@ -1,0 +1,52 @@
+A {
+    color: #428bca; /* Цвет ссылок */
+}
+A:visited {
+    color: #428bca; /* Цвет посещенных ссылок */
+}
+A:active {
+    color: #2a6496; /* Цвет активных ссылок */
+}
+A:hover {
+    color: #2a6496; /* Цвет активных ссылок */
+}
+
+#itemTitle {
+    font-size: 11pt;
+    font-family: Verdana;
+    padding: 3px;
+
+   /* text-shadow: red 1px 0px, red 1px 1px, red 0px 1px, red -1px 1px, red -1px 0px, red -1px -1px, red 0px -1px, red 1px -1px, red 0 0 3px, red 0 0 3px, red 0 0 3px, red 0 0 3px, red 0 0 3px, red 0 0 3px, red 0 0 3px, red 0 0 3px; */
+}
+
+#itemLevel {
+    font-size: 10pt;
+    font-family: Verdana;
+    padding: 3px;
+    color: #428bca;
+
+
+}
+
+#itemDescription {
+    font-size: 9pt;
+    font-family: Verdana;
+    font-weight: normal;
+    padding: 2px;
+}
+
+#itemSell {
+    font-size: 9pt;
+    font-family: Verdana;
+    font-weight: normal;
+}
+
+#itemUse
+{
+    text-decoration: none;
+
+}
+
+
+
+

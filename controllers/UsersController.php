@@ -347,7 +347,7 @@ class UsersController
     {
         $user = new Users();
         $user->readUserById($_SESSION['userId']);
-        include '/models/Items.php';
+        include_once '/models/Items.php';
         $item = new Items();
         $this->data['user'] = $user;
         $this->data['itemAttack'] = $item->getEquipmentAttackItem($user->userId);

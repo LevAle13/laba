@@ -5,8 +5,6 @@
  * Date: 25.02.2016
  * Time: 20:04
  */
-
-
 ?>
 
 <!DOCTYPE html>

@@ -99,4 +99,28 @@ class Items
         for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
         return $data[0];
     }
+
+    // Найти предмет и его данные по его айди;
+    public function readById($itemId)
+    {
+        $sql = xquery ("select * from items where itemsId='".$itemId."' ");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return $data[0];
+    }
+
+    // Считываем все предметы игрока;
+    public function readAllItemsByUserId($userId)
+    {
+        $sql = xquery ("select * from items where userId='".$userId."' order by level DESC ");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return $data;
+    }
+
+    // Считываем количество предметов у игрока;
+    public function itemsCount($userId)
+    {
+        $sql = xquery ("select count(userId) itemCount from items where userId='".$userId."'");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return $data[0]['itemCount'];
+    }
 }
