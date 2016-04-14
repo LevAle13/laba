@@ -36,6 +36,14 @@
 
                  <div class="col-md-9 col-lg-9" style ="border: 1px solid rgba(116, 23, 187, 0.19);">
                      <div style="font-family: Tahoma; font-size: 14pt; font-weight:bold; color: blue; ">
+
+                         <?php
+                         if ($viewsData['errorMessage']<>'')
+                         {
+                             echo "<div style='color: red; text-align: center'>".$viewsData['errorMessage']."</div><hr>";
+                         }
+                         ?>
+
                          <br>
                          <A HREF='/Users/questSelect'>Начать приключение</A><br><br>
                          <A HREF='/Users/inventory'>Инвентарь</A>

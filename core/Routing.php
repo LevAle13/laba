@@ -48,12 +48,12 @@ class Routing
                 $this->data['sessionCheck'] = true;
             }
 
+            // Если класс загружен, а сессия успешна - то запускаем Экшен контроллера;
             if (($this->loadClass() == true) and ($this->data['sessionCheck'] == true) )
             {
                 $this->actionController();
             }
         }
-
 
         $viewFile = 'views/'.$this->data['returnPage'].'.php';
         if (file_exists($viewFile) == false)
@@ -63,6 +63,8 @@ class Routing
         }
         //Вызываем вьюху;
         $viewsData = $this->data;
+
+
         include 'views/' . $this->data['returnPage'] . '.php';
     }
 
@@ -74,6 +76,9 @@ class Routing
         $this->controller = $this->parse['0'].'Controller';
         $this->action = $this->parse['1'].'Action';
         $this->parseValue = $this->parse['2'];
+        // Парс данные переносим в массив реквост данных;
+        $this->requestData['parseValue1'] = $this->parse['2'];
+        $this->requestData['parseValue2'] = $this->parse['3'];
 
         // Проверка на пустой контроллер;
         if ($this->controller == 'Controller')
@@ -121,9 +126,6 @@ class Routing
         {
             $actionBegin = $this->action;
             $this->data = $newAction->$actionBegin($this->requestData);
-            //echo "Return page: ".$this->data['returnPage']." <br>";
-            //echo "RESULT JE: <br>";
-            //print_r($this->data);
         }
         else
         {
@@ -132,8 +134,5 @@ class Routing
         }
     }
 
-
 }
-
-
 ?>

@@ -91,4 +91,12 @@ class Items
 
         $result = xquery($sqlText);
     }
+
+    // Получаем информацию об одетом ОРУЖИИ и его заточке по айди персонажа;
+    public function getUserItems($userId)
+    {
+        $sql = xquery ("select * from items where userId='".$userId."' order by level DESC");
+        for ($data=array(); $row=mysql_fetch_assoc($sql); $data[]=$row);
+        return $data[0];
+    }
 }
