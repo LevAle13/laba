@@ -46,8 +46,8 @@
 
                          <br>
                          <A HREF='/Users/questSelect'>Начать приключение</A><br><br>
-                         <A HREF='/Users/inventory'>Инвентарь</A>
-                         &nbsp;<A HREF='/Users/inventory2'>+</A><br><br>
+                         <A HREF='/Items/inventory'>Инвентарь</A>
+                         &nbsp;<A HREF='/Items/inventory2'>+</A><br><br>
                          <A HREF='/Users/skills'>Умения</A><br><br>
                          <A HREF='/Items/itemShop'>Магазин оружия и доспехов</A><br><br>
                          <A HREF='/Items/potionShop'>Магазин Эликсиров</A><br><br>

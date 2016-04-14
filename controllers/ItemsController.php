@@ -8,70 +8,90 @@
 
 class itemsController
 {
-    public $itemId;
-    public $userId;
-    public $itemName;
-    public $itemType;
-    public $itemLevel;
-    public $SwordAttack;
-    public $BowAttack;
-    public $MagicAttack;
-    public $SwordShield;
-    public $BowShield;
-    public $MagicShield;
-    public $minimumDamage;
-    public $maximumDamage;
-    public $upgradeLevel;
-    public $itemBuy; // Цена покупки.
-    public $itemSell;// Цена продажи.
-    public $tempId;  // Не помню зачем.
-    public $hitPoints;
-    public $up; // ЧТО ЭТО?
+    // Р”Р°РЅРЅС‹Рµ РґР»СЏ РІРѕР·РІСЂР°С‚Р°;
+    public $data;
 
-    // Создаем новый предмет на основе данных из квеста.
+    //
+    public function inventoryAction($requestData)
+    {
+        // Р’С‹Р·С‹РІР°РµРј РєРѕРЅС‚СЂРѕР»Р»РµСЂ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С…;
+        include "/controllers/UsersController.php";
+        $myUser = new UsersController();
+        $myUser->readUser();
+        $this->data = $myUser->data;
+
+        // Р’ Р±РѕСЋ РЅРµР»СЊР·СЏ Р»Р°Р·РёС‚СЊ РІ РёРЅРІРµРЅС‚Р°СЂСЊ;
+        if ($this->data['user']->questId <>0)
+        {
+            $this->data['returnPage'] = 'main';
+            $this->data['errorMessage'] = 'Р’ Р±РѕСЋ РЅРµР»СЊР·СЏ РїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РёРЅРІРµРЅС‚Р°СЂРµРј!<br>Р’РµСЂРЅРёС‚РµСЃСЊ РІ Р±РѕР№!';
+        }
+        else
+        {
+
+
+
+            $this->data['returnPage'] = 'inventory';
+            // РџСЂРѕРґР°РµРј РїСЂРµРґРјРµС‚;
+            if ($requestData['parseValue1']=='sell')
+            {
+
+            }
+            // РћРґРµРІР°РµРј РїСЂРµРґРјРµС‚;
+            if ($requestData['parseValue1']=='use')
+            {
+
+            }
+        }
+
+
+        return $this->data;
+    }
+
+    //
     public function createItem($questInfo)
     {
 
     }
 
-    // Загружаем предмет.
+    //
     public function loadItem()
     {
 
     }
 
-    // Сохраняем предмет.
+    //
     public function saveItem()
     {
 
     }
 
-    // Покупка предмета.
+    //
     public function buyItem()
     {
 
     }
 
-    // Продажа предмета.
+    //
     public function sellItem()
     {
 
     }
 
-    // Удаляем предмет.
+    //
     public function deleteItem()
     {
 
     }
 
 
-    // Улучшение предмета заточкой.
+    //
     public function upgradeItem()
     {
 
     }
 
-    // Улучшение предмета инкрустацией.
+    //
     public function incrustationItem()
     {
 

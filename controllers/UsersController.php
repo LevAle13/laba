@@ -354,36 +354,6 @@ class UsersController
         $this->data['itemShield'] = $item->getEquipmentShieldItem($user->userId);
     }
 
-    public function inventoryAction($requestData)
-    {
-        $this->readUser();
-        // В бою нельзя лазить в инвентарь;
-
-        echo $this->data['user']->questId;
-        if ($this->data['user']->questId <>0)
-        {
-            $this->data['returnPage'] = 'main';
-            $this->data['errorMessage'] = 'В бою нельзя пользоваться инвентарем!<br>Вернитесь в бой!';
-        }
-        else
-        {
-
-            $this->data['returnPage'] = 'inventory';
-            // Продаем предмет;
-            if ($requestData['parseValue1']=='sell')
-            {
-
-            }
-            // Одеваем предмет;
-            if ($requestData['parseValue1']=='use')
-            {
-
-            }
-        }
-
-
-        return $this->data;
-    }
 
     // Добавление опыта.
     public function addExperience($experience)
