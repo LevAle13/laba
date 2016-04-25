@@ -226,7 +226,7 @@ foreach($viewsData['items'] as $myItems)
 
                     //print_r($viewsData['items']);
 
-                    echo "<div style='text-align: center'><A HREF='/Users/main'>Вернуться назад</A></center><hr></div>";
+                    echo "<div style='text-align: center'><A id = 'itemUse' HREF='/Users/main'>Вернуться назад</A></center><hr></div>";
 
                     echo '
                     <table border="0" width="100%">

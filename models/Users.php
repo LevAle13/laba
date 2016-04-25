@@ -101,14 +101,10 @@ class Users
     // Хочу вывести массив на экран;
     public function printArray($data)
     {
-
-
         foreach($data as $key => $value)
         {
             echo $key.' = '.$value.'<br>';
         }
-
-        //print_r($data);
     }
 
     // Извлечение данных для логина;

@@ -31,7 +31,7 @@
     <div class="container">
         <div class="row" style ="border: 1px solid blue;">
 
-            <?php include 'UserInfo.php';?>
+            <?php include 'userInfo.php';?>
 
             <div class="col-md-9 col-lg-9" style ="border: 1px solid rgba(116, 23, 187, 0.19);">
                 <div style="font-family: Tahoma; padding: 3px; font-size: 11pt; color: black; ">
